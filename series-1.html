@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunlit Fragments — Simei Liang (Melanie)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Nunito:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="site-nav">
+  <a href="index.html" class="nav-logo" aria-label="Simei Liang home">
+    <img src="assets/logo.png" alt="Simei Liang logo">
+  </a>
+  <nav class="nav-menu" aria-label="Primary">
+    <div class="nav-artwork">
+      <a href="series-1.html" class="nav-link nav-artwork-main">Artwork</a>
+      <button class="nav-artwork-toggle" type="button" aria-expanded="false" aria-controls="artwork-panel" aria-label="Show series list">
+        <span class="nav-caret"></span>
+      </button>
+      <div class="nav-artwork-panel" id="artwork-panel"></div>
+    </div>
+    <div class="nav-contact">
+      <button class="nav-contact-toggle" type="button" aria-expanded="false" aria-controls="nav-contact-panel">
+        Contact
+        <span class="nav-caret"></span>
+      </button>
+      <div class="nav-contact-panel" id="nav-contact-panel">
+        <a href="#" target="_blank" rel="noopener">RedNote: RNPlaceholder</a>
+        <a href="#" target="_blank" rel="noopener">Instagram: InsPlaceholder</a>
+        <a href="mailto:email@placeholder.com">Email: email@placeholder.com</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="series-page">
+  <div class="series-header">
+    <h1>Sunlit Fragments</h1>
+    <p>Small studies in warmth and light &mdash; the color of memory before it settles into shape. Hover (or tap) any piece for its title and a short note.</p>
+  </div>
+
+  <div class="art-grid">
+    <figure class="art-tile" tabindex="0">
+      <img src="Art series/Series 1/1-1.png" alt="Morning Burst">
+      <figcaption class="art-overlay">
+        <h3>Morning Burst</h3>
+        <p>The first light of day never arrives quietly &mdash; it spills, it glows, it insists. I wanted to paint the moment before you open your eyes, when warmth reaches you before sight does.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="art-tile" tabindex="0">
+      <img src="Art series/Series 1/1-2.png" alt="Two Blooms, One Field">
+      <figcaption class="art-overlay">
+        <h3>Two Blooms, One Field</h3>
+        <p>Even from a distance, color finds its echo. This piece is about the quiet company we keep &mdash; two small warm things, unhurried, in a wide open space.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="art-tile" tabindex="0">
+      <img src="Art series/Series 1/1-3.png" alt="Where the Wind Settles">
+      <figcaption class="art-overlay">
+        <h3>Where the Wind Settles</h3>
+        <p>Not every feeling needs to fill the whole page. Here, a single soft flame of color drifts toward stillness &mdash; the rest is left for breathing room.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="art-tile" tabindex="0">
+      <img src="Art series/Series 1/1-4.png" alt="Leaning Toward the Light">
+      <figcaption class="art-overlay">
+        <h3>Leaning Toward the Light</h3>
+        <p>I keep returning to this shape &mdash; warmth gathering in a corner, reaching outward. It reminds me of how comfort arrives sideways, not all at once.</p>
+      </figcaption>
+    </figure>
+
+    <figure class="art-tile" tabindex="0">
+      <img src="Art series/Series 1/1-5.png" alt="A Small Nest of Color">
+      <figcaption class="art-overlay">
+        <h3>A Small Nest of Color</h3>
+        <p>Some memories don't have edges &mdash; they just glow, soft and round, like something held gently in cupped hands.</p>
+      </figcaption>
+    </figure>
+  </div>
+
+  <nav class="series-pager" data-current="series-1.html" aria-label="Series navigation"></nav>
+</main>
+
+<button id="chat-button" class="chat-fab" type="button" aria-haspopup="dialog" aria-controls="chat-modal" aria-label="Open contact form">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2C6.48 2 2 5.94 2 10.8c0 2.77 1.44 5.24 3.7 6.86-.12.9-.53 2.24-1.55 3.6a.5.5 0 0 0 .58.77c1.9-.62 3.42-1.5 4.4-2.2.9.24 1.86.37 2.87.37 5.52 0 10-3.94 10-8.8S17.52 2 12 2z"/></svg>
+</button>
+
+<div id="chat-modal" class="chat-modal" role="dialog" aria-modal="true" aria-labelledby="chat-modal-title" hidden>
+  <div class="chat-modal-backdrop"></div>
+  <div class="chat-modal-panel">
+    <button class="chat-modal-close" type="button" aria-label="Close">&times;</button>
+    <h2 id="chat-modal-title">Say hello</h2>
+    <p>Send Melanie a quick note and she'll get back to you.</p>
+    <form id="chat-form" class="chat-form">
+      <input type="checkbox" name="botcheck" class="chat-form-honeypot" tabindex="-1" autocomplete="off">
+      <div class="chat-field">
+        <label for="chat-name">Name</label>
+        <input type="text" id="chat-name" name="name" required>
+      </div>
+      <div class="chat-field">
+        <label for="chat-email">Email</label>
+        <input type="email" id="chat-email" name="email" required>
+      </div>
+      <div class="chat-field">
+        <label for="chat-message">Message</label>
+        <textarea id="chat-message" name="message" rows="4" required></textarea>
+      </div>
+      <button type="submit" class="chat-form-submit">Send Message</button>
+      <p class="chat-form-status" aria-live="polite"></p>
+    </form>
+  </div>
+</div>
+
+<script src="js/site-config.js"></script>
+<script src="js/series-data.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
