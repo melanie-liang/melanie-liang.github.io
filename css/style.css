@@ -269,7 +269,20 @@ a {
   transition: filter 0.35s ease, transform 0.35s ease;
 }
 
-.art-tile:hover img,
+/* :hover is scoped to real mouse pointers only — on touch devices it can
+   stick around after a tap in an unpredictable way, so touch relies solely
+   on the JS-driven .active class below for consistent open/close behavior. */
+@media (hover: hover) and (pointer: fine) {
+  .art-tile:hover img {
+    filter: blur(7px) brightness(0.72);
+    transform: scale(1.06);
+  }
+
+  .art-tile:hover .art-overlay {
+    opacity: 1;
+  }
+}
+
 .art-tile:focus-visible img,
 .art-tile.active img {
   filter: blur(7px) brightness(0.72);
@@ -296,7 +309,6 @@ a {
   pointer-events: none;
 }
 
-.art-tile:hover .art-overlay,
 .art-tile:focus-visible .art-overlay,
 .art-tile.active .art-overlay {
   opacity: 1;

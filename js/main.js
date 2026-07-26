@@ -139,12 +139,26 @@ document.addEventListener('DOMContentLoaded', () => {
     pager.innerHTML = html;
   }
 
-  // Art tiles: hover reveals the overlay on desktop; tapping toggles it on touch devices.
-  document.querySelectorAll('.art-tile').forEach((tile) => {
+  // Art tiles: hover reveals the overlay on desktop; tapping toggles it on touch
+  // devices. Only one tile stays open at a time, and tapping anywhere outside
+  // every tile closes whichever one is open.
+  const artTiles = document.querySelectorAll('.art-tile');
+
+  artTiles.forEach((tile) => {
     tile.addEventListener('click', () => {
-      tile.classList.toggle('active');
+      const wasActive = tile.classList.contains('active');
+      artTiles.forEach((t) => t.classList.remove('active'));
+      if (!wasActive) tile.classList.add('active');
     });
   });
+
+  if (artTiles.length) {
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.art-tile')) {
+        artTiles.forEach((t) => t.classList.remove('active'));
+      }
+    });
+  }
 
   // Floating chat button: opens a contact-form modal that posts to Web3Forms
   // (see js/site-config.js for the access key) so submissions land in an
