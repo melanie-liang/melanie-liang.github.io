@@ -1,3 +1,37 @@
+/* ---------- Self-hosted fonts ----------
+   Downloaded from Google Fonts and served from assets/fonts/ instead of
+   fonts.googleapis.com/fonts.gstatic.com, which are blocked in mainland
+   China — self-hosting means the fonts load everywhere, not just where
+   Google's CDN is reachable. Each file is a variable font covering the
+   whole weight range in one download (that's why one file serves 500-700
+   for Quicksand, and 400-700 for Nunito). Latin-alphabet glyphs only —
+   Chinese text on the site (e.g. artwork titles) was already falling back
+   to the system's own CJK font, since neither of these families ships
+   Chinese glyphs at all, so nothing changes there. */
+@font-face {
+  font-family: 'Quicksand';
+  font-style: normal;
+  font-weight: 500 700;
+  font-display: swap;
+  src: url('../assets/fonts/quicksand.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('../assets/fonts/nunito-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Nunito';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../assets/fonts/nunito-italic.woff2') format('woff2');
+}
+
 /* ---------- Reset & base ---------- */
 * {
   margin: 0;
@@ -44,7 +78,35 @@ a {
 .nav-logo {
   display: flex;
   align-items: center;
+  gap: 0.55rem;
   flex-shrink: 0;
+  text-decoration: none;
+}
+
+/* Spelled out beside the avatar so it is obvious that clicking it is the way
+   back to the main page -- the picture alone was not telling anyone that. */
+.nav-logo-label {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #4a3b32;
+  /* Same padding and transparent border as .nav-link so switching the underline
+     on and off never shifts the header. */
+  padding: 0.4rem 0.2rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-logo:hover .nav-logo-label {
+  color: #b5652e;
+  border-color: #f0a35f;
+}
+
+/* On the homepage the underline tracks the section in view: Home while the
+   hero is on screen, About once the bio/awards sections are (see main.js). */
+.nav-logo.active .nav-logo-label {
+  color: #b5652e;
+  border-color: #f0a35f;
 }
 
 .nav-logo img {
@@ -52,13 +114,16 @@ a {
   height: 2.75rem;
   border-radius: 50%;
   object-fit: cover;
+  object-position: 12% center;
   display: block;
 }
 
 .nav-menu {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 1.5rem;
+  justify-content: flex-end;
+  gap: 1rem 1.5rem;
 }
 
 .nav-link {
@@ -77,148 +142,44 @@ a {
   border-color: #f0a35f;
 }
 
-.nav-contact {
-  position: relative;
+.nav-link.active {
+  color: #b5652e;
+  border-color: #f0a35f;
 }
 
-.nav-contact-toggle {
+/* ---------- Sub-nav (second row: siblings of the active top-level item) ---------- */
+.sub-nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem;
+  gap: 1.25rem;
+}
+
+.series-page .sub-nav,
+.content-page .sub-nav {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eaddcc;
+}
+
+.sub-nav a {
   font-family: 'Quicksand', sans-serif;
   font-weight: 600;
-  font-size: 0.95rem;
-  color: #4a3b32;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.4rem 0.2rem;
-}
-
-.nav-contact-toggle:hover {
-  color: #b5652e;
-}
-
-.nav-caret {
-  width: 0.5rem;
-  height: 0.5rem;
-  border-right: 2px solid currentColor;
-  border-bottom: 2px solid currentColor;
-  transform: rotate(45deg);
-  margin-top: -0.2rem;
-  transition: transform 0.2s ease, margin 0.2s ease;
-}
-
-.nav-contact.open .nav-caret {
-  transform: rotate(-135deg);
-  margin-top: 0.25rem;
-}
-
-.nav-contact-panel {
-  position: absolute;
-  top: calc(100% + 0.6rem);
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  min-width: 13rem;
-  padding: 0.9rem;
-  background: #fffaf3;
-  border-radius: 0.9rem;
-  box-shadow: 0 12px 28px rgba(74, 46, 26, 0.18);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-}
-
-.nav-contact.open .nav-contact-panel {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.nav-contact-panel a {
   font-size: 0.9rem;
-  color: #4a3b32;
+  color: #8a6f5c;
   text-decoration: none;
-  padding: 0.35rem 0.5rem;
-  border-radius: 0.5rem;
-  transition: background 0.2s ease, color 0.2s ease;
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
-.nav-contact-panel a:hover {
-  background: #fdf0e3;
+.sub-nav a:hover {
   color: #b5652e;
 }
 
-/* ---------- Artwork split button + dropdown ---------- */
-.nav-artwork {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 0.1rem;
-}
-
-.nav-artwork-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0.4rem 0.3rem;
+.sub-nav a.active {
   color: #4a3b32;
-}
-
-.nav-artwork-toggle:hover {
-  color: #b5652e;
-}
-
-.nav-artwork:hover .nav-caret,
-.nav-artwork.open .nav-caret {
-  transform: rotate(-135deg);
-  margin-top: 0.25rem;
-}
-
-.nav-artwork-panel {
-  position: absolute;
-  top: calc(100% + 0.6rem);
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  min-width: 10rem;
-  padding: 0.6rem;
-  background: #fffaf3;
-  border-radius: 0.9rem;
-  box-shadow: 0 12px 28px rgba(74, 46, 26, 0.18);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-6px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
-}
-
-.nav-artwork:hover .nav-artwork-panel,
-.nav-artwork.open .nav-artwork-panel {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.nav-artwork-panel a {
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #4a3b32;
-  text-decoration: none;
-  padding: 0.45rem 0.6rem;
-  border-radius: 0.5rem;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.nav-artwork-panel a:hover {
-  background: #fdf0e3;
-  color: #b5652e;
+  border-color: #f0a35f;
 }
 
 /* ---------- Series pages ---------- */
@@ -246,27 +207,209 @@ a {
   line-height: 1.6;
 }
 
+/* Year and materials for a body of work shown as one piece (the series pages
+   and Mixed Media). These used to be per-image hover captions; Melanie asked
+   for them here instead, because each of those pages is a single work. */
+.work-meta {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #b5652e;
+  margin-bottom: 0.9rem;
+}
+
+/* 18rem min keeps this at 3 tiles per row inside the 72rem container —
+   bigger artwork than the 4-up it used to be, same overall grid width. */
 .art-grid {
-  columns: 3 18rem;
-  column-gap: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1.5rem;
+}
+
+/* Only 2 paintings: stack them and size each closer to the width of the
+   screen instead of splitting it in half. */
+.art-grid--paintings {
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+.art-grid--paintings .art-tile {
+  /* Melanie asked for these to take up at least a third of the screen; the
+     100% ceiling just stops them overflowing the 72rem container on very
+     wide displays. */
+  width: clamp(20rem, 44vw, 100%);
+}
+
+/* A 4-piece series reads better as one full row than 3 + a lone straggler. */
+.art-grid--four {
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+/* Blessing is laid out as an open book: cover down the left, the three
+   interior spreads stacked in the middle, back cover down the right.
+   align-items: center keeps the single-tile side columns vertically centred
+   against the tall middle column instead of stretching them. */
+.art-grid--book {
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  row-gap: 0.75rem;
+}
+
+/* Explicit placement for all five -- auto-placement would fill row by row. */
+.art-grid--book .art-tile:nth-child(1) { grid-column: 1; grid-row: 1 / 4; }
+.art-grid--book .art-tile:nth-child(2) { grid-column: 2; grid-row: 1; }
+.art-grid--book .art-tile:nth-child(3) { grid-column: 2; grid-row: 2; }
+.art-grid--book .art-tile:nth-child(4) { grid-column: 2; grid-row: 3; }
+.art-grid--book .art-tile:nth-child(5) { grid-column: 3; grid-row: 1 / 4; }
+
+/* The three interior spreads are all 2:1 files. In a square tile each one sat
+   in a band of empty page, which read as a big gap between them -- a 2:1 tile
+   removes that and stacks them tight. Half the usual watermark inset keeps the
+   name at the same height relative to the (now shorter) tile. */
+.art-grid--book .art-tile:nth-child(2),
+.art-grid--book .art-tile:nth-child(3),
+.art-grid--book .art-tile:nth-child(4) {
+  aspect-ratio: 2 / 1;
+}
+
+.art-grid--book .art-tile:nth-child(2)::before,
+.art-grid--book .art-tile:nth-child(3)::before,
+.art-grid--book .art-tile:nth-child(4)::before {
+  padding-bottom: 9%;
+}
+
+/* Cover and back cover smaller than a full column so they sit beside the
+   spreads rather than looming over them. */
+.art-grid--book .art-tile:nth-child(1),
+.art-grid--book .art-tile:nth-child(5) {
+  width: 72%;
+  justify-self: center;
+}
+
+/* Individual series pages: one big piece per row, read top to bottom. */
+.art-grid--stacked {
+  grid-template-columns: 1fr;
+  justify-items: center;
+  gap: 2.5rem;
+}
+
+.art-grid--stacked .art-tile {
+  width: 100%;
+  max-width: 44rem;
+}
+
+/* Blessing's own page. Its three interior spreads are 2:1 files and its cover
+   and back cover are square. Forcing every tile square letterboxed each spread
+   inside a tall empty box, which pushed the watermark off the artwork and left
+   a big gap between pieces -- matching each tile to its own image fixes both,
+   so the page gap can come down too. */
+.art-grid--book-page {
+  gap: 1rem;
+}
+
+.art-grid--book-page .art-tile--wide {
+  aspect-ratio: 2 / 1;
+}
+
+.art-grid--book-page .art-tile--wide::before {
+  padding-bottom: 9%;
+}
+
+.art-grid--book-page .art-tile--cover {
+  max-width: 26rem;
+}
+
+/* Fruit Skin: small square works, and Melanie asked for them to show smaller
+   than the other series' stacked pages. */
+.art-grid--compact .art-tile {
+  max-width: 30rem;
+}
+
+/* Mixed Media: every photo is a different shape, including one 1:4 strip. Each
+   tile keeps its own proportions at a shared row height so nothing is cropped
+   or squashed, and rows centre themselves. */
+.art-grid--mixed {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  grid-template-columns: none;
+  gap: 1.25rem;
+}
+
+/* The long 1:4 strip runs down one side rather than sitting alone at the
+   bottom, where it read as one endless image with empty space beside it. */
+.art-grid--mixed .mixed-side {
+  flex: 0 0 16rem;
+  max-width: 100%;
+}
+
+.art-grid--mixed .mixed-side .art-tile {
+  width: 100%;
+  height: auto;
+  aspect-ratio: auto;
+}
+
+.art-grid--mixed .mixed-side .art-tile img {
+  width: 100%;
+  height: auto;
+}
+
+/* Everything else fills the other side, each piece at its own proportions and
+   a shared height, rows centring themselves. */
+.art-grid--mixed .mixed-main {
+  flex: 1 1 30rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1.25rem;
+}
+
+.art-grid--mixed .mixed-main .art-tile {
+  flex: 0 0 auto;
+  height: 20rem;
+  width: auto;
+  aspect-ratio: auto;
+}
+
+.art-grid--mixed .mixed-main .art-tile img {
+  height: 100%;
+  width: auto;
 }
 
 .art-tile {
   position: relative;
   display: block;
+  aspect-ratio: 1;
   overflow: hidden;
-  break-inside: avoid;
-  margin-bottom: 1.5rem;
-  border-radius: 1.25rem;
   cursor: pointer;
-  box-shadow: 0 10px 24px rgba(74, 46, 26, 0.12);
 }
 
 .art-tile img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
   display: block;
   transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+.art-tile::before {
+  content: 'Melanie';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding-bottom: 18%;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.06em;
+  color: rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
 /* :hover is scoped to real mouse pointers only — on touch devices it can
@@ -281,6 +424,10 @@ a {
   .art-tile:hover .art-overlay {
     opacity: 1;
   }
+
+  .art-tile:hover::before {
+    opacity: 0;
+  }
 }
 
 .art-tile:focus-visible img,
@@ -289,14 +436,48 @@ a {
   transform: scale(1.06);
 }
 
+.art-tile:focus-visible::before,
+.art-tile.active::before {
+  opacity: 0;
+}
+
 .art-tile:focus-visible {
   outline: 3px solid #f0a35f;
   outline-offset: 3px;
 }
 
+/* A tile with no caption has nothing to reveal, so it gets none of the reveal
+   behaviour: no blur, no zoom, no pointer, and the watermark stays put. The
+   class is added by main.js to every .art-tile that has no .art-overlay, which
+   is all of the series pages and Mixed Media. */
+.art-tile--plain {
+  cursor: default;
+}
+
+/* Except on series.html, where the whole block is a link -- clicking a preview
+   there does go somewhere, so it should still look clickable. */
+a.series-block .art-tile--plain {
+  cursor: pointer;
+}
+
+.art-tile--plain img,
+.art-tile--plain:hover img,
+.art-tile--plain:focus-visible img,
+.art-tile--plain.active img {
+  filter: none;
+  transform: none;
+}
+
+.art-tile--plain:hover::before,
+.art-tile--plain:focus-visible::before,
+.art-tile--plain.active::before {
+  opacity: 1;
+}
+
 .art-overlay {
   position: absolute;
   inset: 0;
+  z-index: 2;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -363,12 +544,12 @@ a {
   transform: translateY(-2px);
 }
 
-.pager-home {
+.pager-all {
   background: #b5652e;
   color: #fffaf3;
 }
 
-.pager-home:hover {
+.pager-all:hover {
   background: #9c5326;
   transform: translateY(-2px);
 }
@@ -376,6 +557,271 @@ a {
 .pager-arrow {
   font-size: 1.1rem;
   line-height: 1;
+}
+
+/* ---------- Content pages (Illustration hub, Paintings, Curatorial Work) ---------- */
+.content-page {
+  min-height: 100vh;
+  min-height: 100svh;
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 6.5rem 1.5rem 4rem;
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.project-block {
+  padding-bottom: 1.75rem;
+  border-bottom: 1px solid #eaddcc;
+}
+
+.project-block:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.project-block h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.3rem;
+}
+
+.project-role {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #b5652e;
+  margin-bottom: 0.6rem;
+}
+
+.project-block p {
+  line-height: 1.7;
+  color: #5c4738;
+}
+
+
+/* Exhibition documentation, NOT Melanie's own artwork: deliberately no
+   "Melanie" watermark and no hover caption, because these photos show other
+   artists' work in the shows she organised. Keep it that way. */
+/* One uniform grid: every photo, poster included, the same size. Melanie tried
+   a poster-left / photos-right split and asked to go back to this.
+   auto-fill, not auto-fit: with auto-fit the Sotheby's block (only two photos)
+   stretched them to double everyone else's size, which is exactly what she
+   asked to get away from. */
+/* Flex, not grid: grid aligns every row to the same columns, so a short last
+   row sits under the left of the row above. Wrapping flex items with
+   justify-content: center centre each row on its own. */
+.project-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Five photos would otherwise wrap as 4 + a lone one. Capping the row at three
+   tiles gives 3 + 2, which Melanie asked for. Add this to any gallery whose
+   last row would hold a single tile. */
+.project-gallery--3up {
+  max-width: calc(16.5rem * 3 + 1rem * 2);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.project-shot {
+  margin: 0;
+  width: 16.5rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.project-shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.hub-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 2rem;
+  justify-content: center;
+}
+
+.contact-list {
+  list-style: none;
+  max-width: 26rem;
+  margin: 2.5rem auto 0;
+}
+
+.contact-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1.1rem 0;
+  border-bottom: 1px solid #eaddcc;
+}
+
+.contact-list li:last-child {
+  border-bottom: none;
+}
+
+.contact-label {
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  color: #8a6f5c;
+}
+
+.contact-list a {
+  font-weight: 600;
+  color: #4a3b32;
+  text-decoration: none;
+}
+
+.contact-list a:hover {
+  color: #b5652e;
+  text-decoration: underline;
+}
+
+/* Each series on series.html is one big link into its own page — the whole
+   block is clickable, and the tint + name colour + arrow on hover are there
+   so it reads as clickable rather than looking like a static gallery. */
+.series-block {
+  display: block;
+  margin-top: 3rem;
+  padding: 3rem 1.25rem 1.75rem;
+  border-top: 1px solid #eaddcc;
+  color: inherit;
+  text-decoration: none;
+  transition: background 0.25s ease;
+}
+
+.series-block:first-of-type {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+a.series-block:hover,
+a.series-block:focus-visible {
+  background: rgba(240, 163, 95, 0.09);
+}
+
+a.series-block:focus-visible {
+  outline: 3px solid #f0a35f;
+  outline-offset: 2px;
+}
+
+.series-block-header {
+  text-align: center;
+  max-width: 40rem;
+  margin: 0 auto 2rem;
+}
+
+.series-block-header h2 {
+  font-family: 'Quicksand', sans-serif;
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
+  margin-bottom: 0.75rem;
+  transition: color 0.25s ease;
+}
+
+a.series-block:hover .series-block-header h2,
+a.series-block:focus-visible .series-block-header h2 {
+  color: #b5652e;
+}
+
+.series-block-header p {
+  color: #5c4738;
+  line-height: 1.6;
+}
+
+.series-block-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #b5652e;
+  transition: gap 0.25s ease;
+}
+
+a.series-block:hover .series-block-cue,
+a.series-block:focus-visible .series-block-cue {
+  gap: 0.85rem;
+  text-decoration: underline;
+}
+
+/* Preview tiles inside a series block aren't individually interactive — the
+   block itself is the link — so suppress the per-tile blur/caption reveal
+   and keep the watermark showing. */
+.series-block .art-tile:hover img,
+.series-block .art-tile:focus-visible img {
+  filter: none;
+  transform: none;
+}
+
+.series-block .art-tile:hover::before,
+.series-block .art-tile:focus-visible::before {
+  opacity: 1;
+}
+
+.series-card-title {
+  display: block;
+  margin-top: 0.6rem;
+  text-align: center;
+  font-family: 'Quicksand', sans-serif;
+  font-weight: 600;
+  color: #4a3b32;
+}
+
+.coming-soon {
+  text-align: center;
+  padding: 3rem 1.5rem;
+  border: 1px dashed #d9a876;
+  border-radius: 1.25rem;
+  color: #8a6f5c;
+  font-style: italic;
+}
+
+/* ---------- Pending grid: real captions/metadata, image + title not in yet ---------- */
+.pending-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  gap: 1.5rem;
+}
+
+.pending-tile {
+  text-align: center;
+}
+
+.pending-image {
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed #d9a876;
+  border-radius: 1.25rem;
+  color: #8a6f5c;
+  font-style: italic;
+  margin-bottom: 0.6rem;
+}
+
+.pending-title {
+  font-weight: 600;
+  font-style: italic;
+  color: #8a6f5c;
+  margin-bottom: 0.2rem;
+}
+
+.pending-meta {
+  font-size: 0.85rem;
+  color: #8a6f5c;
 }
 
 /* ---------- Scroll container ---------- */
@@ -418,6 +864,15 @@ a {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* The source is already the top half of "Swam Across Your Wall"; anchoring to
+     the top means any further cropping on wide screens takes from the bottom,
+     never from the two faces. */
+  object-position: center top;
+  /* Softened so the name reads clearly over it. This is CSS only -- the image
+     file itself is untouched. The slight scale-up hides the transparent edge
+     that blur leaves around the element. */
+  filter: blur(7px);
+  transform: scale(1.06);
 }
 
 .hero-overlay {
@@ -440,11 +895,6 @@ a {
   max-width: 40rem;
 }
 
-.hero-greeting {
-  font-size: 1.25rem;
-  letter-spacing: 0.05em;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
-}
 
 .hero-name {
   font-size: clamp(2.25rem, 6vw, 3.75rem);
@@ -453,10 +903,6 @@ a {
   text-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
 }
 
-.hero-name span {
-  font-weight: 500;
-  opacity: 0.9;
-}
 
 .hero-rule {
   width: 4.5rem;
@@ -522,6 +968,11 @@ a {
   transform: rotate(45deg);
 }
 
+@keyframes bob-up {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-8px); }
+}
+
 @keyframes bob {
   0%, 100% { transform: translateX(-50%) translateY(0); }
   50% { transform: translateX(-50%) translateY(8px); }
@@ -529,11 +980,44 @@ a {
 
 /* ---------- Sections 2 & 3: split layout ---------- */
 .split-section {
+  position: relative;
   display: flex;
 }
 
 .split-section.reverse {
   flex-direction: row-reverse;
+}
+
+.split-scroll-cue {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 50%;
+  background: rgba(181, 101, 46, 0.85);
+  border: none;
+  cursor: pointer;
+  animation: bob 2.2s ease-in-out infinite;
+}
+
+.split-scroll-cue .chevron {
+  border-color: #fffaf3;
+}
+
+/* At the bottom of the panel the arrow flips up, so it is clear the list has
+   ended and the button now takes you back. */
+.split-scroll-cue.at-end {
+  animation-name: bob-up;
+}
+
+.split-scroll-cue.at-end .chevron {
+  transform: rotate(225deg) translate(-2px, -2px);
 }
 
 .split-image {
@@ -666,6 +1150,39 @@ a {
   top: 0.05rem;
   color: #f0a35f;
   font-size: 0.8rem;
+}
+
+.award-list li.award-group::before {
+  content: "";
+}
+
+.award-sublist {
+  list-style: none;
+  margin: 0.5rem 0 0.6rem;
+  padding-left: 0.3rem;
+}
+
+.award-sublist li {
+  position: relative;
+  line-height: 1.6;
+  padding-left: 1.1rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.award-sublist li::before {
+  content: "\2013";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #f0a35f;
+}
+
+.award-note {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #8a6f5c;
+  margin: 0 0 0.7rem;
 }
 
 /* ---------- Dot navigation ---------- */
@@ -896,6 +1413,17 @@ body.chat-modal-open .scroller {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
+  /* Too narrow for a 3-up book spread: stack it like every other grid. */
+  .art-grid--book {
+    grid-template-columns: 1fr;
+  }
+
+  .art-grid--book .art-tile {
+    grid-column: auto;
+    grid-row: auto;
+    width: 100%;
+  }
+
   .split-section,
   .split-section.reverse {
     flex-direction: column;
@@ -921,15 +1449,25 @@ body.chat-modal-open .scroller {
     flex-direction: column;
     align-items: center;
   }
-
-  .art-grid {
-    columns: 2 13rem;
-  }
 }
 
 @media (max-width: 480px) {
-  .hero-greeting {
-    font-size: 1.05rem;
+  /* Phone: one tile per row, filling the column. */
+  .project-shot {
+    width: 100%;
+  }
+
+  /* Phone: mixed-media tiles size by width, one per row. */
+  .art-grid--mixed .mixed-side,
+  .art-grid--mixed .mixed-main .art-tile {
+    flex-basis: 100%;
+    height: auto;
+    width: 100%;
+  }
+
+  .art-grid--mixed .mixed-main .art-tile img {
+    width: 100%;
+    height: auto;
   }
 
   .split-text h2 {
@@ -950,21 +1488,17 @@ body.chat-modal-open .scroller {
   }
 
   .nav-link,
-  .nav-contact-toggle {
+  .nav-logo-label {
     font-size: 0.85rem;
   }
 
-  .nav-contact-panel,
-  .nav-artwork-panel {
-    min-width: 11rem;
+  .nav-logo {
+    gap: 0.4rem;
   }
 
-  .series-page {
-    padding-top: 5.5rem;
-  }
-
-  .art-grid {
-    columns: 1;
+  .series-page,
+  .content-page {
+    padding-top: 7.5rem;
   }
 
   .pager-btn {

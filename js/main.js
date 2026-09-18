@@ -32,12 +32,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const dotFor = (id) => document.querySelector(`.dot-nav .dot[data-target="${id}"]`);
 
+  // On the homepage the header underline follows the section in view rather
+  // than sitting on About the whole time: Home while the hero is on screen,
+  // About once the bio or awards section is. Both are null on every other page,
+  // which has no .section elements for the observer to fire on anyway.
+  const homeLink = document.querySelector('.nav-logo');
+  const aboutLink = document.querySelector('.nav-menu a[href^="#"]');
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         dots.forEach((dot) => dot.classList.remove('active'));
         const activeDot = dotFor(entry.target.id);
         if (activeDot) activeDot.classList.add('active');
+
+        if (homeLink && aboutLink) {
+          const onHero = entry.target.id === 'hero';
+          homeLink.classList.toggle('active', onHero);
+          aboutLink.classList.toggle('active', !onHero);
+        }
       }
     });
   }, { root: scroller, threshold: 0.6 });
@@ -56,71 +69,38 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  const contactWrap = document.querySelector('.nav-contact');
-  const contactToggle = document.querySelector('.nav-contact-toggle');
+  // Split-section scroll cue: hints that the text panel (e.g. Awards &
+  // Recognition) scrolls internally, and nudges it down a bit on click. At the
+  // bottom the arrow flips to point up and the button scrolls back to the top,
+  // so there is a clear signal that the list has ended.
+  document.querySelectorAll('.split-scroll-cue').forEach((cue) => {
+    const textPanel = cue.closest('.split-section').querySelector('.split-text');
+    if (!textPanel) return;
 
-  if (contactWrap && contactToggle) {
-    contactToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = contactWrap.classList.toggle('open');
-      contactToggle.setAttribute('aria-expanded', String(isOpen));
+    const scrollable = () => textPanel.scrollHeight - textPanel.clientHeight > 8;
+    const atEnd = () =>
+      textPanel.scrollTop + textPanel.clientHeight >= textPanel.scrollHeight - 4;
+
+    const sync = () => {
+      cue.hidden = !scrollable();
+      const end = atEnd();
+      cue.classList.toggle('at-end', end);
+      cue.setAttribute('aria-label', end ? 'Back to the top of this list' : 'Scroll down for more');
+    };
+
+    cue.addEventListener('click', () => {
+      textPanel.scrollTo({
+        top: atEnd() ? 0 : textPanel.scrollTop + 260,
+        behavior: 'smooth',
+      });
     });
 
-    document.addEventListener('click', (e) => {
-      if (!contactWrap.contains(e.target)) {
-        contactWrap.classList.remove('open');
-        contactToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
+    textPanel.addEventListener('scroll', sync);
+    window.addEventListener('resize', sync);
+    sync();
+  });
 
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        contactWrap.classList.remove('open');
-        contactToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  // Artwork split button + dropdown: main link goes to the first series,
-  // the caret opens a list of every series pulled from series-data.js.
-  const artworkWrap = document.querySelector('.nav-artwork');
-  const artworkToggle = document.querySelector('.nav-artwork-toggle');
-  const artworkPanel = document.querySelector('.nav-artwork-panel');
-
-  if (typeof SERIES_LIST !== 'undefined' && SERIES_LIST.length) {
-    if (artworkPanel) {
-      artworkPanel.innerHTML = SERIES_LIST
-        .map((s) => `<a href="${s.page}">${s.title}</a>`)
-        .join('');
-    }
-    document.querySelectorAll('.nav-artwork-main, .cta-artwork-link').forEach((el) => {
-      el.href = SERIES_LIST[0].page;
-    });
-  }
-
-  if (artworkWrap && artworkToggle) {
-    artworkToggle.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const isOpen = artworkWrap.classList.toggle('open');
-      artworkToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!artworkWrap.contains(e.target)) {
-        artworkWrap.classList.remove('open');
-        artworkToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        artworkWrap.classList.remove('open');
-        artworkToggle.setAttribute('aria-expanded', 'false');
-      }
-    });
-  }
-
-  // Series pager (Previous / Main Page / Next), built from series-data.js
+  // Series pager (Previous / All Series / Next), built from series-data.js
   // so adding a new series to that list is enough to update every page's links.
   const pager = document.querySelector('.series-pager');
   if (pager && typeof SERIES_LIST !== 'undefined') {
@@ -132,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (prev) {
       html += `<a class="pager-btn pager-prev" href="${prev.page}"><span class="pager-arrow">&larr;</span> Previous: ${prev.title}</a>`;
     }
-    html += `<a class="pager-btn pager-home" href="index.html">Main Page</a>`;
+    html += `<a class="pager-btn pager-all" href="series.html">All Series</a>`;
     if (next) {
       html += `<a class="pager-btn pager-next" href="${next.page}">Next: ${next.title} <span class="pager-arrow">&rarr;</span></a>`;
     }
@@ -142,7 +122,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Art tiles: hover reveals the overlay on desktop; tapping toggles it on touch
   // devices. Only one tile stays open at a time, and tapping anywhere outside
   // every tile closes whichever one is open.
-  const artTiles = document.querySelectorAll('.art-tile');
+  // Tiles with no caption have nothing to reveal: mark them so the CSS drops
+  // the blur/zoom/pointer entirely, and leave them out of the tap handling.
+  const artTiles = [...document.querySelectorAll('.art-tile')].filter((tile) => {
+    if (tile.querySelector('.art-overlay')) return true;
+    tile.classList.add('art-tile--plain');
+    return false;
+  });
 
   artTiles.forEach((tile) => {
     tile.addEventListener('click', () => {
