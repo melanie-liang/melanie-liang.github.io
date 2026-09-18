@@ -1444,13 +1444,17 @@ body.chat-modal-open .scroller {
   /* The header is fixed and sits over the top of this panel, which hid
      Melanie's face. Pad the photo down past it and give the panel a little
      more height to make up for the padding. */
+  /* Roughly square photo (Melanie asked for "类似于正方形的一个长方形"), plus enough
+     padding to clear the fixed header, which sits over the top of this panel. */
   .split-image {
-    flex: 0 0 42%;
+    flex: 0 0 auto;
+    height: calc(min(90vw, 26rem) + 4.5rem);
     padding-top: 4.5rem;
   }
 
   .split-text {
-    flex: 1 1 66%;
+    flex: 1 1 auto;
+    min-height: 0;
   }
 
   .split-text-inner {
@@ -1470,6 +1474,7 @@ body.chat-modal-open .scroller {
 @media (max-width: 480px) {
   /* Two rows of nav links at this width, so it needs clearing by more. */
   .split-image {
+    height: calc(min(90vw, 26rem) + 6.5rem);
     padding-top: 6.5rem;
   }
 
