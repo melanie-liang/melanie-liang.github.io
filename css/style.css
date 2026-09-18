@@ -1030,6 +1030,9 @@ a.series-block:focus-visible .series-block-cue {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  /* Both photos are of Melanie with her head near the top. On phones this panel
+     becomes a short wide band, and a centred crop cut her head off. */
+  object-position: center top;
   display: block;
 }
 
@@ -1413,12 +1416,19 @@ body.chat-modal-open .scroller {
 
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
-  /* Too narrow for a 3-up book spread: stack it like every other grid. */
+  /* Too narrow for a 3-up book spread: stack it like every other grid. The
+     nth-child selectors have to be repeated here -- the desktop placements use
+     them too, and a plainer selector loses to them, which collapsed the cover
+     to zero width on phones. */
   .art-grid--book {
     grid-template-columns: 1fr;
   }
 
-  .art-grid--book .art-tile {
+  .art-grid--book .art-tile:nth-child(1),
+  .art-grid--book .art-tile:nth-child(2),
+  .art-grid--book .art-tile:nth-child(3),
+  .art-grid--book .art-tile:nth-child(4),
+  .art-grid--book .art-tile:nth-child(5) {
     grid-column: auto;
     grid-row: auto;
     width: 100%;
