@@ -1030,9 +1030,11 @@ a.series-block:focus-visible .series-block-cue {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* Both photos are of Melanie with her head near the top. On phones this panel
-     becomes a short wide band, and a centred crop cut her head off. */
-  object-position: center top;
+  /* Both photos are of Melanie with her head in the upper third. Anchoring to
+     the very top still cut her face off on phones, because a short panel then
+     keeps only what is above the face. 22% puts the crop window just above the
+     beret, so the whole head stays in frame at any panel height. */
+  object-position: center 18%;
   display: block;
 }
 
@@ -1439,8 +1441,12 @@ body.chat-modal-open .scroller {
     flex-direction: column;
   }
 
+  /* The header is fixed and sits over the top of this panel, which hid
+     Melanie's face. Pad the photo down past it and give the panel a little
+     more height to make up for the padding. */
   .split-image {
-    flex: 0 0 34%;
+    flex: 0 0 42%;
+    padding-top: 4.5rem;
   }
 
   .split-text {
@@ -1462,6 +1468,11 @@ body.chat-modal-open .scroller {
 }
 
 @media (max-width: 480px) {
+  /* Two rows of nav links at this width, so it needs clearing by more. */
+  .split-image {
+    padding-top: 6.5rem;
+  }
+
   /* Phone: one tile per row, filling the column. */
   .project-shot {
     width: 100%;
