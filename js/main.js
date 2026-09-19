@@ -26,6 +26,26 @@ function animateScrollTo(container, targetTop, duration) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  // ---------- Language switch ----------
+  // Text lives in the HTML as <span data-lang="en"> / <span data-lang="zh">
+  // pairs and CSS shows the one matching <html lang>. The inline script in
+  // each <head> has already applied a saved choice before first paint; this
+  // keeps the tab title in step and handles the button.
+  const isZh = () => document.documentElement.lang.startsWith('zh');
+  const L = (en, zh) => `<span data-lang="en">${en}</span><span data-lang="zh">${zh}</span>`;
+  const titleEl = document.querySelector('title');
+  const titleEn = titleEl.dataset.en || titleEl.textContent;
+  const titleZh = titleEl.dataset.zh || titleEn;
+  const applyLang = (zh) => {
+    document.documentElement.lang = zh ? 'zh-CN' : 'en';
+    document.title = zh ? titleZh : titleEn;
+    try { localStorage.setItem('lang', zh ? 'zh' : 'en'); } catch (e) { /* private mode */ }
+  };
+  applyLang(isZh());
+  document.querySelectorAll('.lang-switch').forEach((button) => {
+    button.addEventListener('click', () => applyLang(!isZh()));
+  });
+
   const sections = document.querySelectorAll('.section');
   const dots = document.querySelectorAll('.dot-nav .dot');
   const scroller = document.querySelector('.scroller');
@@ -121,11 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let html = '';
     if (prev) {
-      html += `<a class="pager-btn pager-prev" href="${prev.page}"><span class="pager-arrow">&larr;</span> Previous: ${prev.title}</a>`;
+      html += `<a class="pager-btn pager-prev" href="${prev.page}"><span class="pager-arrow">&larr;</span> ${L(`Previous: ${prev.title}`, `上一个：${prev.titleZh || prev.title}`)}</a>`;
     }
-    html += `<a class="pager-btn pager-all" href="series.html">All Series</a>`;
+    html += `<a class="pager-btn pager-all" href="series.html">${L('All Series', '全部系列')}</a>`;
     if (next) {
-      html += `<a class="pager-btn pager-next" href="${next.page}">Next: ${next.title} <span class="pager-arrow">&rarr;</span></a>`;
+      html += `<a class="pager-btn pager-next" href="${next.page}">${L(`Next: ${next.title}`, `下一个：${next.titleZh || next.title}`)} <span class="pager-arrow">&rarr;</span></a>`;
     }
     pager.innerHTML = html;
   }
@@ -194,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
 
       chatSubmit.disabled = true;
-      chatSubmit.textContent = 'Sending…';
+      chatSubmit.innerHTML = L('Sending…', '发送中…');
       chatStatus.textContent = '';
       chatStatus.className = 'chat-form-status';
 
@@ -216,18 +236,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const result = await response.json();
 
         if (result.success) {
-          chatStatus.textContent = "Thanks! Your message is on its way — we'll get back to you soon.";
+          chatStatus.innerHTML = L("Thanks! Your message is on its way — we'll get back to you soon.", '谢谢！留言已发送，我们会尽快回复你。');
           chatStatus.classList.add('success');
           chatForm.reset();
         } else {
           throw new Error(result.message || 'Something went wrong.');
         }
       } catch (err) {
-        chatStatus.textContent = 'Something went wrong sending your message. Please try again in a moment.';
+        chatStatus.innerHTML = L('Something went wrong sending your message. Please try again in a moment.', '留言发送失败，请稍后再试。');
         chatStatus.classList.add('error');
       } finally {
         chatSubmit.disabled = false;
-        chatSubmit.textContent = 'Send Message';
+        chatSubmit.innerHTML = L('Send Message', '发送');
       }
     });
   }

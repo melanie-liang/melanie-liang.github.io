@@ -44,13 +44,13 @@ html, body {
 }
 
 body {
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   color: #4a3b32;
   background: #fdf6ee;
 }
 
 h1, h2 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
 }
 
 a {
@@ -86,7 +86,7 @@ a {
 /* Spelled out beside the avatar so it is obvious that clicking it is the way
    back to the main page -- the picture alone was not telling anyone that. */
 .nav-logo-label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   color: #4a3b32;
@@ -127,7 +127,7 @@ a {
 }
 
 .nav-link {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
@@ -163,7 +163,7 @@ a {
 }
 
 .sub-nav a {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.9rem;
   color: #8a6f5c;
@@ -402,7 +402,7 @@ a {
   align-items: flex-end;
   justify-content: center;
   padding-bottom: 18%;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 700;
   font-size: 1.5rem;
   letter-spacing: 0.06em;
@@ -496,7 +496,7 @@ a.series-block .art-tile--plain {
 }
 
 .art-overlay h3 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 1.15rem;
   margin-bottom: 0.5rem;
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
@@ -672,7 +672,7 @@ a.series-block .art-tile--plain {
 }
 
 .contact-label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   color: #8a6f5c;
 }
@@ -724,7 +724,7 @@ a.series-block:focus-visible {
 }
 
 .series-block-header h2 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: clamp(1.5rem, 3.5vw, 2rem);
   margin-bottom: 0.75rem;
   transition: color 0.25s ease;
@@ -744,7 +744,7 @@ a.series-block:focus-visible .series-block-header h2 {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.9rem;
   color: #b5652e;
@@ -775,7 +775,7 @@ a.series-block:focus-visible .series-block-cue {
   display: block;
   margin-top: 0.6rem;
   text-align: center;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   color: #4a3b32;
 }
@@ -1102,7 +1102,7 @@ a.series-block:focus-visible .series-block-cue {
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   border-radius: 999px;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   text-decoration: none;
@@ -1324,7 +1324,7 @@ body.chat-modal-open .scroller {
 }
 
 .chat-modal-panel h2 {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 1.35rem;
   margin-bottom: 0.4rem;
   color: #4a3b32;
@@ -1353,7 +1353,7 @@ body.chat-modal-open .scroller {
 }
 
 .chat-field label {
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.85rem;
   color: #4a3b32;
@@ -1365,7 +1365,7 @@ body.chat-modal-open .scroller {
   padding: 0.6rem 0.8rem;
   border: 1.5px solid #eaddcc;
   border-radius: 0.7rem;
-  font-family: 'Nunito', sans-serif;
+  font-family: 'Nunito', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-size: 0.95rem;
   color: #4a3b32;
   background: #fff;
@@ -1385,7 +1385,7 @@ body.chat-modal-open .scroller {
   border: none;
   background: #b5652e;
   color: #fffaf3;
-  font-family: 'Quicksand', sans-serif;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   cursor: pointer;
@@ -1577,4 +1577,40 @@ body.chat-modal-open .scroller {
     max-height: 85vh;
     border-radius: 1.25rem 1.25rem 0 0;
   }
+}
+
+/* ---------- Language switch ----------
+   Every translatable string is a pair of spans, data-lang="en" and
+   data-lang="zh"; only the one matching <html lang> is shown. English is the
+   default in the HTML, Chinese is opt-in and remembered per browser (see the
+   inline script in each page's <head>, and main.js). Artwork titles are
+   deliberately NOT paired -- Melanie keeps them in English in both versions,
+   except the ones she already has Chinese names for. */
+html:not([lang|="zh"]) [data-lang="zh"],
+html[lang|="zh"] [data-lang="en"] {
+  display: none !important;
+}
+
+.lang-switch {
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: #b5652e;
+  background: transparent;
+  border: 1.5px solid #d9a876;
+  border-radius: 999px;
+  padding: 0.3rem 0.8rem;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-switch:hover {
+  background: #b5652e;
+  color: #fffaf3;
+}
+
+/* Chinese reads better with a little more line height than the Latin fonts. */
+html[lang|="zh"] body {
+  line-height: 1.75;
 }

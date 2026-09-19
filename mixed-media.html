@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mixed Media — Simei Liang (Melanie)</title>
+<title data-zh="综合材料 — Simei Liang (Melanie)">Mixed Media — Simei Liang (Melanie)</title>
+<script>try{if(localStorage.getItem('lang')==='zh'){document.documentElement.lang='zh-CN';var t=document.querySelector('title');t.dataset.en=t.textContent;if(t.dataset.zh)document.title=t.dataset.zh}}catch(e){}</script>
 <meta name="description" content="Sleep Through 2026, a mixed-media work by Melanie (Simei Liang).">
 <meta name="author" content="Melanie Liang (Simei Liang)">
 <link rel="canonical" href="https://melanie-liang.github.io/mixed-media.html">
@@ -22,27 +23,28 @@
 <header class="site-nav">
   <a href="index.html" class="nav-logo">
     <img src="assets/logo.jpg" alt="">
-    <span class="nav-logo-label">Home</span>
+    <span class="nav-logo-label"><span data-lang="en">Home</span><span data-lang="zh">首页</span></span>
   </a>
   <nav class="nav-menu" aria-label="Primary">
-    <a href="illustration.html" class="nav-link active">Illustration</a>
-    <a href="curatorial-work.html" class="nav-link">Curation</a>
-    <a href="index.html#illustrator" class="nav-link">About</a>
-    <a href="contact.html" class="nav-link">Contact</a>
+    <a href="illustration.html" class="nav-link active"><span data-lang="en">Illustration</span><span data-lang="zh">插画</span></a>
+    <a href="curatorial-work.html" class="nav-link"><span data-lang="en">Curation</span><span data-lang="zh">策展</span></a>
+    <a href="index.html#illustrator" class="nav-link"><span data-lang="en">About</span><span data-lang="zh">关于</span></a>
+    <a href="contact.html" class="nav-link"><span data-lang="en">Contact</span><span data-lang="zh">联系</span></a>
+    <button type="button" class="lang-switch" aria-label="Switch language / 切换语言"><span data-lang="en">中文</span><span data-lang="zh">EN</span></button>
   </nav>
 </header>
 
 <main class="series-page">
   <nav class="sub-nav" aria-label="Illustration">
-    <a href="illustration.html">Illustration</a>
-    <a href="series.html">Series</a>
-    <a href="paintings.html">Paintings</a>
-    <a href="mixed-media.html" class="active">Mixed Media</a>
+    <a href="illustration.html"><span data-lang="en">Illustration</span><span data-lang="zh">插画</span></a>
+    <a href="series.html"><span data-lang="en">Series</span><span data-lang="zh">系列</span></a>
+    <a href="paintings.html"><span data-lang="en">Paintings</span><span data-lang="zh">油画</span></a>
+    <a href="mixed-media.html" class="active"><span data-lang="en">Mixed Media</span><span data-lang="zh">综合材料</span></a>
   </nav>
 
   <div class="series-header">
     <h1>Sleep Through 2026</h1>
-    <p class="work-meta">2025 &middot; Mixed media &mdash; fabric, thread, Velcro, felt, eyeshadow</p>
+    <p class="work-meta"><span data-lang="en">2025 &middot; Mixed media &mdash; fabric, thread, Velcro, felt, eyeshadow</span><span data-lang="zh">2025 &middot; 综合材料 &mdash; 布料、线、魔术贴、不织布、眼影</span></p>
   </div>
 
   <div class="art-grid art-grid--mixed">
@@ -93,23 +95,23 @@
   <div class="chat-modal-backdrop"></div>
   <div class="chat-modal-panel">
     <button class="chat-modal-close" type="button" aria-label="Close">&times;</button>
-    <h2 id="chat-modal-title">Say hello</h2>
-    <p>Send Melanie a quick note and she'll get back to you.</p>
+    <h2 id="chat-modal-title"><span data-lang="en">Say hello</span><span data-lang="zh">打个招呼</span></h2>
+    <p><span data-lang="en">Send Melanie a quick note and she'll get back to you.</span><span data-lang="zh">给 Melanie 留个言，她会尽快回复你。</span></p>
     <form id="chat-form" class="chat-form">
       <input type="checkbox" name="botcheck" class="chat-form-honeypot" tabindex="-1" autocomplete="off">
       <div class="chat-field">
-        <label for="chat-name">Name</label>
+        <label for="chat-name"><span data-lang="en">Name</span><span data-lang="zh">姓名</span></label>
         <input type="text" id="chat-name" name="name" required>
       </div>
       <div class="chat-field">
-        <label for="chat-email">Email</label>
+        <label for="chat-email"><span data-lang="en">Email</span><span data-lang="zh">邮箱</span></label>
         <input type="email" id="chat-email" name="email" required>
       </div>
       <div class="chat-field">
-        <label for="chat-message">Message</label>
+        <label for="chat-message"><span data-lang="en">Message</span><span data-lang="zh">留言</span></label>
         <textarea id="chat-message" name="message" rows="4" required></textarea>
       </div>
-      <button type="submit" class="chat-form-submit">Send Message</button>
+      <button type="submit" class="chat-form-submit"><span data-lang="en">Send Message</span><span data-lang="zh">发送</span></button>
       <p class="chat-form-status" aria-live="polite"></p>
     </form>
   </div>
