@@ -53,19 +53,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }
     });
-  }, { root: scroller, threshold: 0.6 });
+  // A thin line across the middle of the screen, rather than "60% visible":
+  // on phones the sections are as tall as their content, and a section taller
+  // than the screen can never be 60% visible, so it would never register.
+  }, { root: scroller, rootMargin: '-50% 0px -50% 0px', threshold: 0 });
 
   sections.forEach((section) => observer.observe(section));
 
   // Smooth-scroll any in-page link that points at a section (dot nav,
   // the hero's scroll-cue chevron, the "Awards & Experiences" button, etc.)
   // instead of leaving it to the browser's native (often instant) anchor jump.
+  // On phones the homepage is one free-scrolling long page (no snapping), and
+  // the fixed header would sit over the top of whatever we scroll to, so stop
+  // short by its height. On desktop the snap points take care of alignment.
+  const headerOffset = () =>
+    getComputedStyle(scroller).scrollSnapType === 'none'
+      ? document.querySelector('.site-nav').offsetHeight
+      : 0;
+
   document.querySelectorAll('a[href^="#"]').forEach((link) => {
     const target = document.getElementById(link.getAttribute('href').slice(1));
     if (!target || !target.classList.contains('section')) return;
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      animateScrollTo(scroller, target.offsetTop, 700);
+      animateScrollTo(scroller, Math.max(0, target.offsetTop - headerOffset()), 700);
     });
   });
 

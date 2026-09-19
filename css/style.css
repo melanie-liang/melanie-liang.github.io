@@ -1444,12 +1444,40 @@ body.chat-modal-open .scroller {
   /* The header is fixed and sits over the top of this panel, which hid
      Melanie's face. Pad the photo down past it and give the panel a little
      more height to make up for the padding. */
-  /* Roughly square photo (Melanie asked for "类似于正方形的一个长方形"), plus enough
-     padding to clear the fixed header, which sits over the top of this panel. */
+  /* Phones: the homepage becomes one ordinary long page. On desktop each
+     section is pinned to the screen and its text scrolls inside it; on a
+     phone that left the photo stuck at the top while the text slid under it,
+     and most of the bio was never visible. Melanie asked for it to scroll
+     like one long image instead. */
+  .scroller {
+    scroll-snap-type: none;
+  }
+
+  .section.split-section {
+    height: auto;
+  }
+
+  .split-text {
+    height: auto;
+    overflow-y: visible;
+  }
+
+  /* Both only make sense for the pinned, screen-by-screen layout. */
+  .dot-nav,
+  .split-scroll-cue {
+    display: none;
+  }
+
+  /* Roughly square photo (Melanie asked for "类似于正方形的一个长方形"). */
   .split-image {
     flex: 0 0 auto;
-    height: calc(min(90vw, 26rem) + 4.5rem);
-    padding-top: 4.5rem;
+    height: min(90vw, 26rem);
+  }
+
+  /* Land in-page jumps (and arriving from another page via #illustrator)
+     below the fixed header instead of underneath it. */
+  .section {
+    scroll-margin-top: 4.5rem;
   }
 
   .split-text {
@@ -1472,10 +1500,9 @@ body.chat-modal-open .scroller {
 }
 
 @media (max-width: 480px) {
-  /* Two rows of nav links at this width, so it needs clearing by more. */
-  .split-image {
-    height: calc(min(90vw, 26rem) + 6.5rem);
-    padding-top: 6.5rem;
+  /* Two rows of nav links at this width, so the header is taller. */
+  .section {
+    scroll-margin-top: 6rem;
   }
 
   /* Phone: one tile per row, filling the column. */
