@@ -897,7 +897,7 @@ a.series-block:focus-visible .series-block-cue {
 
 
 .hero-name {
-  font-size: clamp(2.9rem, 7.5vw, 4.75rem);
+  font-size: clamp(2.9rem, 7.5vw, 6rem);
   font-weight: 700;
   margin: 0.35rem 0 1.1rem;
   text-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
@@ -905,7 +905,7 @@ a.series-block:focus-visible .series-block-cue {
 
 
 .hero-rule {
-  width: 5.5rem;
+  width: clamp(5.5rem, 6vw, 7rem);
   height: 3px;
   margin: 0 auto 1.4rem;
   border: none;
@@ -914,7 +914,7 @@ a.series-block:focus-visible .series-block-cue {
 }
 
 .hero-tagline {
-  font-size: 1.3rem;
+  font-size: clamp(1.3rem, 1.9vw, 1.8rem);
   font-style: italic;
   margin-bottom: 1.9rem;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
@@ -930,11 +930,11 @@ a.series-block:focus-visible .series-block-cue {
 
 .hero-links a {
   display: inline-block;
-  padding: 0.7rem 1.4rem;
+  padding: 0.8rem 1.65rem;
   border: 1.5px solid rgba(255, 250, 243, 0.7);
   border-radius: 999px;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1.25rem;
   font-weight: 600;
   backdrop-filter: blur(2px);
   transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
