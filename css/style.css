@@ -902,7 +902,7 @@ a.series-block:focus-visible .series-block-cue {
      scratchpad denoise.py), and only a light blur is left here for the dreamy
      feel. Raising this above ~4px brings the blotchiness back.
      The slight scale-up hides the transparent edge blur leaves. */
-  filter: blur(3px);
+  filter: blur(1.5px);
   transform: scale(1.06);
 }
 
