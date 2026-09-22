@@ -1188,6 +1188,19 @@ a.series-block:focus-visible .series-block-cue {
   line-height: 1;
 }
 
+/* Awards scrolls down, so it gets a down arrow. Works opens a different page,
+   which a right arrow made look like a sideways move; the diagonal is the
+   usual "this takes you somewhere else" mark. Both buttons keep an arrow so
+   the pair still matches. */
+.cta-arrow--away {
+  font-size: 1rem;
+  transition: transform 0.25s ease;
+}
+
+.cta-btn:hover .cta-arrow--away {
+  transform: translate(2px, -2px);
+}
+
 .award-list {
   list-style: none;
   margin-bottom: 0.5rem;
