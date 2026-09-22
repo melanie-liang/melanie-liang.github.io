@@ -878,9 +878,10 @@ a.series-block:focus-visible .series-block-cue {
      the top means any further cropping on wide screens takes from the bottom,
      never from the two faces. */
   /* The crop is the faces and both of the girl's hands, with a little room
-     under them. Biased downwards so that on a short window it is the top of
-     the heads that goes, never her hands. */
-  object-position: center 70%;
+     under them, starting from the very top of the painting so there is some
+     room above their heads. Biased slightly downwards so that on a short
+     window it is the top that goes rather than her hands. */
+  object-position: center 60%;
 }
 
 .hero-overlay {
