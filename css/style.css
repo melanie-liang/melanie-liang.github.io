@@ -900,29 +900,22 @@ a.series-block:focus-visible .series-block-cue {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  /* Two layers rather than one scrim: a pale cream haze washes the painting
-     back, which is what reads as mist, and the warm gradient over it brings
-     the overall brightness back to where it was. Same darkness as before,
-     softer air. The image itself stays sharp -- no blur. */
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(74, 46, 26, 0.5) 0%,
-      rgba(74, 46, 26, 0.61) 55%,
-      rgba(74, 46, 26, 0.72) 100%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(253, 246, 238, 0.3) 0%,
-      rgba(253, 246, 238, 0.3) 100%
-    );
+  /* White mist only -- Melanie does not want the painting darkened at all.
+     Because the cover is now pale, the lettering over it is dark rather than
+     white; see .hero-content below. */
+  background: linear-gradient(
+    to bottom,
+    rgba(253, 246, 238, 0.52) 0%,
+    rgba(253, 246, 238, 0.44) 55%,
+    rgba(253, 246, 238, 0.54) 100%
+  );
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   text-align: center;
-  color: #fffaf3;
+  color: #4a3b32;
   padding: 2rem;
   max-width: 40rem;
 }
@@ -932,7 +925,8 @@ a.series-block:focus-visible .series-block-cue {
   font-size: clamp(2.9rem, 7.5vw, 5rem);
   font-weight: 700;
   margin: 0.35rem 0 1.1rem;
-  text-shadow: 0 2px 6px rgba(74, 46, 26, 0.35), 0 6px 24px rgba(74, 46, 26, 0.4);
+  /* A pale halo, so the name lifts off the painting without darkening it. */
+  text-shadow: 0 2px 14px rgba(253, 246, 238, 0.95), 0 0 34px rgba(253, 246, 238, 0.85);
 }
 
 
@@ -941,7 +935,7 @@ a.series-block:focus-visible .series-block-cue {
   height: 3px;
   margin: 0 auto 1.4rem;
   border: none;
-  background: #f6c99a;
+  background: rgba(181, 101, 46, 0.55);
   border-radius: 2px;
 }
 
@@ -949,7 +943,7 @@ a.series-block:focus-visible .series-block-cue {
   font-size: clamp(1.3rem, 1.9vw, 1.8rem);
   font-style: italic;
   margin-bottom: 1.9rem;
-  text-shadow: 0 1px 4px rgba(74, 46, 26, 0.45), 0 4px 16px rgba(74, 46, 26, 0.45);
+  text-shadow: 0 1px 10px rgba(253, 246, 238, 0.95), 0 0 24px rgba(253, 246, 238, 0.8);
 }
 
 /* The obvious way into the site. The bare chevron that used to sit at the
@@ -962,25 +956,23 @@ a.series-block:focus-visible .series-block-cue {
   display: inline-block;
   margin-top: 0.6rem;
   padding: 0.8rem 2.6rem;
-  border: 1.5px solid rgba(255, 250, 243, 0.6);
+  border: 1.5px solid rgba(181, 101, 46, 0.55);
   border-radius: 999px;
-  background: rgba(74, 46, 26, 0.26);
-  color: #fffaf3;
+  background: rgba(253, 246, 238, 0.6);
+  color: #4a3b32;
   text-decoration: none;
   font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: 0.04em;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .hero-enter:hover,
 .hero-enter:focus-visible {
-  background: #fffaf3;
-  border-color: #fffaf3;
-  color: #4a3b32;
-  text-shadow: none;
+  background: #b5652e;
+  border-color: #b5652e;
+  color: #fffaf3;
   transform: translateY(-2px);
 }
 
@@ -994,6 +986,7 @@ a.series-block:focus-visible .series-block-cue {
 .hero-scroll-hint .chevron {
   display: block;
   margin: 0 auto;
+  border-color: rgba(74, 59, 50, 0.75);
   opacity: 0.9;
 }
 
@@ -1026,16 +1019,16 @@ a.series-block:focus-visible .series-block-cue {
 
 .hero-links a {
   display: inline-block;
-  color: rgba(255, 250, 243, 0.85);
+  color: rgba(74, 59, 50, 0.88);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
-  text-shadow: 0 1px 4px rgba(74, 46, 26, 0.6), 0 2px 12px rgba(74, 46, 26, 0.5);
+  text-shadow: 0 1px 8px rgba(253, 246, 238, 0.95);
   transition: color 0.25s ease;
 }
 
 .hero-links a:hover {
-  color: #fffaf3;
+  color: #b5652e;
   text-decoration: underline;
 }
 
