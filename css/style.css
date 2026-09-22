@@ -877,7 +877,10 @@ a.series-block:focus-visible .series-block-cue {
   /* The source is already the top half of "Swam Across Your Wall"; anchoring to
      the top means any further cropping on wide screens takes from the bottom,
      never from the two faces. */
-  object-position: center top;
+  /* The crop is the faces and both of the girl's hands, with a little room
+     under them. Biased downwards so that on a short window it is the top of
+     the heads that goes, never her hands. */
+  object-position: center 70%;
 }
 
 .hero-overlay {
