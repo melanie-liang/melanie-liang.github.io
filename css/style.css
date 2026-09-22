@@ -897,8 +897,8 @@ a.series-block:focus-visible .series-block-cue {
   object-position: center 60%;
   /* Softened, which is the look Melanie settled on. CSS only -- the file is
      untouched. The slight scale-up hides the transparent edge blur leaves. */
-  filter: blur(7px);
-  transform: scale(1.06);
+  filter: blur(4px);
+  transform: scale(1.04);
 }
 
 .hero-overlay {
