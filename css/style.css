@@ -900,12 +900,22 @@ a.series-block:focus-visible .series-block-cue {
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(74, 46, 26, 0.14) 0%,
-    rgba(74, 46, 26, 0.26) 55%,
-    rgba(74, 46, 26, 0.42) 100%
-  );
+  /* Two layers rather than one scrim: a pale cream haze washes the painting
+     back, which is what reads as mist, and the warm gradient over it brings
+     the overall brightness back to where it was. Same darkness as before,
+     softer air. The image itself stays sharp -- no blur. */
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(74, 46, 26, 0.5) 0%,
+      rgba(74, 46, 26, 0.61) 55%,
+      rgba(74, 46, 26, 0.72) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(253, 246, 238, 0.3) 0%,
+      rgba(253, 246, 238, 0.3) 100%
+    );
 }
 
 .hero-content {
@@ -922,9 +932,7 @@ a.series-block:focus-visible .series-block-cue {
   font-size: clamp(2.9rem, 7.5vw, 5rem);
   font-weight: 700;
   margin: 0.35rem 0 1.1rem;
-  /* The overlay is deliberately light so the painting stays bright, so the
-     lettering carries its own contrast instead. */
-  text-shadow: 0 2px 6px rgba(74, 46, 26, 0.45), 0 6px 26px rgba(74, 46, 26, 0.5);
+  text-shadow: 0 2px 6px rgba(74, 46, 26, 0.35), 0 6px 24px rgba(74, 46, 26, 0.4);
 }
 
 
