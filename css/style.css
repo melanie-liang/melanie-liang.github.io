@@ -895,9 +895,14 @@ a.series-block:focus-visible .series-block-cue {
      room above their heads. Biased slightly downwards so that on a short
      window it is the top that goes rather than her hands. */
   object-position: center 60%;
-  /* Softened, which is the look Melanie settled on. CSS only -- the file is
-     untouched. The slight scale-up hides the transparent edge blur leaves. */
-  filter: blur(7px);
+  /* The painting itself carries a heavy speckled noise texture, and blurring
+     that noise is what made the cover read as grainy/blotchy -- a blur turns
+     speckle into soft clumps rather than removing it. So the grain is taken
+     out of the file instead (box-averaged down and re-interpolated up, see
+     scratchpad denoise.py), and only a light blur is left here for the dreamy
+     feel. Raising this above ~4px brings the blotchiness back.
+     The slight scale-up hides the transparent edge blur leaves. */
+  filter: blur(3px);
   transform: scale(1.06);
 }
 
