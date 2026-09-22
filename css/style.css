@@ -927,37 +927,46 @@ a.series-block:focus-visible .series-block-cue {
 
 /* The obvious way into the site. The bare chevron that used to sit at the
    bottom was too easy to miss, so this says where it goes. */
+/* A solid cream button: the translucent dark version read as a grey smudge
+   over the artwork, and an outline alone was not visible enough. The arrow
+   moved out of the button -- beside the word it looked odd -- and is now a
+   separate chevron underneath, which is the usual "there is more below" cue. */
 .hero-enter {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin-top: 0.4rem;
-  padding: 0.85rem 2.4rem;
-  border: 2px solid rgba(255, 250, 243, 0.9);
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.9rem 2.8rem;
+  border: none;
   border-radius: 999px;
-  color: #fffaf3;
+  background: #fffaf3;
+  color: #4a3b32;
   text-decoration: none;
   font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 700;
   font-size: 1.15rem;
-  letter-spacing: 0.02em;
-  background: rgba(74, 46, 26, 0.3);
-  backdrop-filter: blur(3px);
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  letter-spacing: 0.03em;
+  box-shadow: 0 6px 20px rgba(74, 46, 26, 0.3);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
 .hero-enter:hover,
 .hero-enter:focus-visible {
-  background: #fffaf3;
-  color: #4a3b32;
+  background: #b5652e;
+  color: #fffaf3;
   transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(74, 46, 26, 0.4);
 }
 
-.hero-enter-arrow {
-  display: inline-block;
-  font-size: 1.1em;
-  line-height: 1;
+.hero-scroll-hint {
+  display: block;
+  width: 1.5rem;
+  margin: 1.5rem auto 0;
   animation: nudge 2.2s ease-in-out infinite;
+}
+
+.hero-scroll-hint .chevron {
+  display: block;
+  margin: 0 auto;
+  opacity: 0.9;
 }
 
 @keyframes nudge {
@@ -1556,7 +1565,11 @@ body.chat-modal-open .scroller {
 
   .hero-enter {
     font-size: 1.05rem;
-    padding: 0.75rem 2rem;
+    padding: 0.8rem 2.4rem;
+  }
+
+  .hero-scroll-hint {
+    margin-top: 1.2rem;
   }
 
   .hero-links {
