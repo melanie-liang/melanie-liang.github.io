@@ -1195,25 +1195,28 @@ body {
   overflow-x: hidden;
 }
 
+/* A full-width slide, not a nudge and a fade: it should read the way the
+   homepage's section scrolling does, so the easing approximates the
+   easeInOutQuad used by animateScrollTo. The fixed header stays put, so the
+   content slides underneath it exactly as it does when you scroll down. */
 main,
 .scroller {
-  transition: transform 0.28s ease, opacity 0.28s ease;
+  transition: transform 0.38s cubic-bezier(0.45, 0, 0.55, 1);
 }
 
 body.is-leaving main,
 body.is-leaving .scroller {
-  transform: translateX(-4%);
-  opacity: 0;
+  transform: translateX(-100%);
 }
 
 @keyframes page-in {
-  from { transform: translateX(5%); opacity: 0; }
-  to { transform: none; opacity: 1; }
+  from { transform: translateX(100%); }
+  to { transform: none; }
 }
 
 html.is-entering main,
 html.is-entering .scroller {
-  animation: page-in 0.34s ease both;
+  animation: page-in 0.42s cubic-bezier(0.45, 0, 0.55, 1) both;
 }
 
 @media (prefers-reduced-motion: reduce) {

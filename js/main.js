@@ -144,7 +144,9 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       try { sessionStorage.setItem('slide-in', '1'); } catch (err) { /* private mode */ }
       document.body.classList.add('is-leaving');
-      setTimeout(() => { window.location.href = slideLink.href; }, 260);
+      // navigate just before the slide finishes, so the eye never rests on
+      // an empty background while the next page loads
+      setTimeout(() => { window.location.href = slideLink.href; }, 300);
     });
   }
 
