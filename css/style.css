@@ -1188,17 +1188,44 @@ a.series-block:focus-visible .series-block-cue {
   line-height: 1;
 }
 
-/* Awards scrolls down, so it gets a down arrow. Works opens a different page,
-   which a right arrow made look like a sideways move; the diagonal is the
-   usual "this takes you somewhere else" mark. Both buttons keep an arrow so
-   the pair still matches. */
-.cta-arrow--away {
-  font-size: 1rem;
-  transition: transform 0.25s ease;
+/* The Works button's arrow points right and the page now really does move
+   right: the current page steps out to the left, the next one arrives from
+   the right. Only that button does it -- see main.js. */
+body {
+  overflow-x: hidden;
 }
 
-.cta-btn:hover .cta-arrow--away {
-  transform: translate(2px, -2px);
+main,
+.scroller {
+  transition: transform 0.28s ease, opacity 0.28s ease;
+}
+
+body.is-leaving main,
+body.is-leaving .scroller {
+  transform: translateX(-4%);
+  opacity: 0;
+}
+
+@keyframes page-in {
+  from { transform: translateX(5%); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}
+
+html.is-entering main,
+html.is-entering .scroller {
+  animation: page-in 0.34s ease both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main,
+  .scroller {
+    transition: none;
+  }
+
+  html.is-entering main,
+  html.is-entering .scroller {
+    animation: none;
+  }
 }
 
 .award-list {

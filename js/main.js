@@ -131,6 +131,23 @@ document.addEventListener('DOMContentLoaded', () => {
     sync();
   });
 
+  // The "Works" button slides: this page leaves to the left and the next one
+  // arrives from the right, which is what its right-pointing arrow promises.
+  // Any other link navigates normally. The incoming half is started by the
+  // inline script in <head> so it runs before the first paint.
+  const slideLink = document.querySelector('.cta-artwork-link');
+  if (slideLink) {
+    slideLink.addEventListener('click', (e) => {
+      // let cmd/ctrl/middle-click still open a new tab
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      e.preventDefault();
+      try { sessionStorage.setItem('slide-in', '1'); } catch (err) { /* private mode */ }
+      document.body.classList.add('is-leaving');
+      setTimeout(() => { window.location.href = slideLink.href; }, 260);
+    });
+  }
+
   // Series pager (Previous / All Series / Next), built from series-data.js
   // so adding a new series to that list is enough to update every page's links.
   const pager = document.querySelector('.series-pager');
