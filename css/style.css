@@ -152,7 +152,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 1.25rem;
+  gap: 0.6rem;
 }
 
 .series-page .sub-nav,
@@ -162,15 +162,24 @@ a {
   border-bottom: 1px solid #eaddcc;
 }
 
+/* Proper tabs rather than small grey links: Melanie found that visitors did
+   not notice the work was split into categories at all. */
 .sub-nav a {
   font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
-  color: #8a6f5c;
+  font-size: 1rem;
+  color: #6d5647;
   text-decoration: none;
-  padding-bottom: 0.3rem;
-  border-bottom: 2px solid transparent;
-  transition: color 0.2s ease, border-color 0.2s ease;
+  padding: 0.45rem 1.15rem;
+  border: 1.5px solid #eaddcc;
+  border-radius: 999px;
+  background: #fffaf3;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.sub-nav a:hover {
+  color: #b5652e;
+  border-color: #d9a876;
 }
 
 .sub-nav a:hover {
@@ -178,8 +187,9 @@ a {
 }
 
 .sub-nav a.active {
-  color: #4a3b32;
-  border-color: #f0a35f;
+  color: #fffaf3;
+  background: #b5652e;
+  border-color: #b5652e;
 }
 
 /* ---------- Series pages ---------- */
@@ -868,11 +878,6 @@ a.series-block:focus-visible .series-block-cue {
      the top means any further cropping on wide screens takes from the bottom,
      never from the two faces. */
   object-position: center top;
-  /* Softened so the name reads clearly over it. This is CSS only -- the image
-     file itself is untouched. The slight scale-up hides the transparent edge
-     that blur leaves around the element. */
-  filter: blur(7px);
-  transform: scale(1.06);
 }
 
 .hero-overlay {
@@ -880,9 +885,9 @@ a.series-block:focus-visible .series-block-cue {
   inset: 0;
   background: linear-gradient(
     to bottom,
-    rgba(74, 46, 26, 0.15) 0%,
-    rgba(74, 46, 26, 0.35) 55%,
-    rgba(74, 46, 26, 0.55) 100%
+    rgba(74, 46, 26, 0.3) 0%,
+    rgba(74, 46, 26, 0.45) 55%,
+    rgba(74, 46, 26, 0.6) 100%
   );
 }
 
@@ -920,45 +925,83 @@ a.series-block:focus-visible .series-block-cue {
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
+/* The obvious way into the site. The bare chevron that used to sit at the
+   bottom was too easy to miss, so this says where it goes. */
+.hero-enter {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 0.4rem;
+  padding: 0.85rem 2.4rem;
+  border: 2px solid rgba(255, 250, 243, 0.9);
+  border-radius: 999px;
+  color: #fffaf3;
+  text-decoration: none;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.02em;
+  background: rgba(74, 46, 26, 0.3);
+  backdrop-filter: blur(3px);
+  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+
+.hero-enter:hover,
+.hero-enter:focus-visible {
+  background: #fffaf3;
+  color: #4a3b32;
+  transform: translateY(-2px);
+}
+
+.hero-enter-arrow {
+  display: inline-block;
+  font-size: 1.1em;
+  line-height: 1;
+  animation: nudge 2.2s ease-in-out infinite;
+}
+
+@keyframes nudge {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(4px); }
+}
+
+/* Contact details sit quietly along the bottom of the cover. As big buttons in
+   the middle they were too tempting -- people clicked straight off to Instagram
+   instead of looking at the work. */
 .hero-links {
+  position: absolute;
+  bottom: 1.5rem;
+  /* left/right rather than left:50% + translate: with only `left` set, an
+     absolutely positioned box may only use the space from there to the right
+     edge, which on a phone was half the screen and wrapped the row. */
+  left: 0;
+  right: 0;
+  z-index: 1;
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem 1rem;
+  gap: 0.35rem 1.6rem;
   justify-content: center;
+  margin: 0;
+  padding: 0 1.25rem;
+  max-width: 100%;
 }
 
 .hero-links a {
   display: inline-block;
-  padding: 0.8rem 1.65rem;
-  border: 1.5px solid rgba(255, 250, 243, 0.7);
-  border-radius: 999px;
+  color: rgba(255, 250, 243, 0.82);
   text-decoration: none;
-  font-size: 1.25rem;
-  font-weight: 600;
-  backdrop-filter: blur(2px);
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
+  transition: color 0.25s ease;
 }
 
 .hero-links a:hover {
-  background: #fffaf3;
-  color: #b5652e;
-  transform: translateY(-2px);
+  color: #fffaf3;
+  text-decoration: underline;
 }
 
-.scroll-cue {
-  position: absolute;
-  bottom: 2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  animation: bob 2.2s ease-in-out infinite;
-}
 
 .chevron {
   width: 0.85rem;
@@ -1493,10 +1536,6 @@ body.chat-modal-open .scroller {
     right: 0.85rem;
   }
 
-  .hero-links {
-    flex-direction: column;
-    align-items: center;
-  }
 
   /* Melanie wanted the bigger hero on desktop only, so below this width
      everything goes back to its original size. */
@@ -1515,9 +1554,24 @@ body.chat-modal-open .scroller {
     margin-bottom: 1.75rem;
   }
 
+  .hero-enter {
+    font-size: 1.05rem;
+    padding: 0.75rem 2rem;
+  }
+
+  .hero-links {
+    gap: 0.2rem 1.1rem;
+  }
+
   .hero-links a {
-    font-size: 0.95rem;
-    padding: 0.55rem 1.1rem;
+    font-size: 0.8rem;
+  }
+
+  /* A phone is not wide enough for three labels plus handles on one row, and
+     Melanie wants them on one row, so the handles drop away here. The links
+     still go to the same places, and the Contact page has the full details. */
+  .hero-handle {
+    display: none;
   }
 }
 
