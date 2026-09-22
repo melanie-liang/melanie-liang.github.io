@@ -141,12 +141,11 @@ document.addEventListener('DOMContentLoaded', () => {
       // let cmd/ctrl/middle-click still open a new tab
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
       if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      e.preventDefault();
+      // Deliberately no preventDefault and no animating this page away: a
+      // browser keeps showing the current page until the next one is ready to
+      // paint, so sliding this one off first is what left a blank gap. Just
+      // flag it and let the link go; the next page slides in on arrival.
       try { sessionStorage.setItem('slide-in', '1'); } catch (err) { /* private mode */ }
-      document.body.classList.add('is-leaving');
-      // navigate just before the slide finishes, so the eye never rests on
-      // an empty background while the next page loads
-      setTimeout(() => { window.location.href = slideLink.href; }, 300);
     });
   }
 

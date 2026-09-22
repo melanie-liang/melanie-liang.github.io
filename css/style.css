@@ -157,9 +157,22 @@ a {
 
 .series-page .sub-nav,
 .content-page .sub-nav {
+  position: relative;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #eaddcc;
+}
+
+/* A pseudo-element rather than a border, so it can draw in from the left. */
+.series-page .sub-nav::after,
+.content-page .sub-nav::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: #eaddcc;
+  transform-origin: left center;
 }
 
 /* Proper tabs rather than small grey links: Melanie found that visitors did
@@ -1203,16 +1216,6 @@ body {
    homepage's section scrolling does, so the easing approximates the
    easeInOutQuad used by animateScrollTo. The fixed header stays put, so the
    content slides underneath it exactly as it does when you scroll down. */
-main,
-.scroller {
-  transition: transform 0.38s cubic-bezier(0.45, 0, 0.55, 1);
-}
-
-body.is-leaving main,
-body.is-leaving .scroller {
-  transform: translateX(-100%);
-}
-
 @keyframes page-in {
   from { transform: translateX(100%); }
   to { transform: none; }
@@ -1223,14 +1226,23 @@ html.is-entering .scroller {
   animation: page-in 0.42s cubic-bezier(0.45, 0, 0.55, 1) both;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  main,
-  .scroller {
-    transition: none;
-  }
+/* The rule under the category tabs draws itself in afterwards, rather than
+   being there the moment the page lands. */
+@keyframes rule-in {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
 
+html.is-entering .series-page .sub-nav::after,
+html.is-entering .content-page .sub-nav::after {
+  animation: rule-in 0.9s cubic-bezier(0.45, 0, 0.55, 1) 0.3s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
   html.is-entering main,
-  html.is-entering .scroller {
+  html.is-entering .scroller,
+  html.is-entering .series-page .sub-nav::after,
+  html.is-entering .content-page .sub-nav::after {
     animation: none;
   }
 }
