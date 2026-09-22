@@ -927,33 +927,34 @@ a.series-block:focus-visible .series-block-cue {
 
 /* The obvious way into the site. The bare chevron that used to sit at the
    bottom was too easy to miss, so this says where it goes. */
-/* A solid cream button: the translucent dark version read as a grey smudge
-   over the artwork, and an outline alone was not visible enough. The arrow
-   moved out of the button -- beside the word it looked odd -- and is now a
-   separate chevron underneath, which is the usual "there is more below" cue. */
+/* Quiet by default, so it never competes with her name: a barely-there warm
+   tint, a thin light outline and white text. It fills with cream on hover.
+   No backdrop blur and no drop shadow -- both were what made the earlier
+   version read as a grey smudge sitting on top of the artwork. */
 .hero-enter {
   display: inline-block;
   margin-top: 0.6rem;
-  padding: 0.9rem 2.8rem;
-  border: none;
+  padding: 0.8rem 2.6rem;
+  border: 1.5px solid rgba(255, 250, 243, 0.6);
   border-radius: 999px;
-  background: #fffaf3;
-  color: #4a3b32;
+  background: rgba(74, 46, 26, 0.16);
+  color: #fffaf3;
   text-decoration: none;
   font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  font-weight: 700;
-  font-size: 1.15rem;
-  letter-spacing: 0.03em;
-  box-shadow: 0 6px 20px rgba(74, 46, 26, 0.3);
-  transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
+  transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .hero-enter:hover,
 .hero-enter:focus-visible {
-  background: #b5652e;
-  color: #fffaf3;
+  background: #fffaf3;
+  border-color: #fffaf3;
+  color: #4a3b32;
+  text-shadow: none;
   transform: translateY(-2px);
-  box-shadow: 0 10px 26px rgba(74, 46, 26, 0.4);
 }
 
 .hero-scroll-hint {
@@ -998,9 +999,9 @@ a.series-block:focus-visible .series-block-cue {
 
 .hero-links a {
   display: inline-block;
-  color: rgba(255, 250, 243, 0.82);
+  color: rgba(255, 250, 243, 0.85);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 500;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
   transition: color 0.25s ease;
@@ -1564,8 +1565,8 @@ body.chat-modal-open .scroller {
   }
 
   .hero-enter {
-    font-size: 1.05rem;
-    padding: 0.8rem 2.4rem;
+    font-size: 1rem;
+    padding: 0.7rem 2.2rem;
   }
 
   .hero-scroll-hint {
@@ -1577,7 +1578,7 @@ body.chat-modal-open .scroller {
   }
 
   .hero-links a {
-    font-size: 0.8rem;
+    font-size: 0.92rem;
   }
 
   /* A phone is not wide enough for three labels plus handles on one row, and
