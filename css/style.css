@@ -908,7 +908,7 @@ a.series-block:focus-visible .series-block-cue {
      into blotches the way every earlier round did. The scale-up hides the
      transparent edge a blur leaves; `object-position: center 60%` above keeps
      the girl's hands when a short window has to crop something. */
-  filter: blur(7px);
+  filter: blur(5px);
   transform: scale(1.06);
 }
 
