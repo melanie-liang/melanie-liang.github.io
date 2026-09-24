@@ -923,18 +923,16 @@ a.series-block:focus-visible .series-block-cue {
   /* The full-height wash that used to live here dimmed the whole painting and
      Melanie rejected it -- her original is bright. But the cover is almost
      white where the name sits, and the type is white, so something has to sit
-     between them. These two gradients are as local as it gets: a soft ellipse
-     just behind the text block, and a short band along the very bottom for the
-     contact row. The faces, the hands, the goldfish and the edges all keep
-     their own brightness. */
+     between them. This is as local as it gets: a soft ellipse just behind the
+     text block. The faces, the hands, the goldfish and the edges all keep
+     their own brightness. There used to be a second band along the bottom for
+     the contact row, dropped when those links went dark brown -- it was
+     working against them. */
   background:
     radial-gradient(ellipse 58% 42% at 50% 40%,
       rgba(74, 46, 26, 0.3) 0%,
       rgba(74, 46, 26, 0.16) 55%,
-      rgba(74, 46, 26, 0) 100%),
-    linear-gradient(to bottom,
-      rgba(74, 46, 26, 0) 82%,
-      rgba(74, 46, 26, 0.32) 100%);
+      rgba(74, 46, 26, 0) 100%);
 }
 
 .hero-content {
@@ -1044,18 +1042,21 @@ a.series-block:focus-visible .series-block-cue {
   max-width: 100%;
 }
 
+/* Dark brown, not white, and a size up. The bottom of the cover is bright
+   orange, so white sat almost invisible there however much shadow it carried
+   -- Melanie: "现在不太明显". Brown on that orange is the strongest pairing the
+   site's own palette offers, and needs no shadow behind it. */
 .hero-links a {
   display: inline-block;
-  color: rgba(255, 250, 243, 0.85);
+  color: #4a3b32;
   text-decoration: none;
-  font-size: 1rem;
-  font-weight: 500;
-  text-shadow: 0 1px 2px rgba(74, 46, 26, 0.55), 0 2px 8px rgba(74, 46, 26, 0.5);
+  font-size: 1.15rem;
+  font-weight: 600;
   transition: color 0.25s ease;
 }
 
 .hero-links a:hover {
-  color: #fffaf3;
+  color: #b5652e;
   text-decoration: underline;
 }
 
@@ -1667,7 +1668,7 @@ body.chat-modal-open .scroller {
   }
 
   .hero-links a {
-    font-size: 0.92rem;
+    font-size: 1.02rem;
   }
 
   /* A phone is not wide enough for three labels plus handles on one row, and
