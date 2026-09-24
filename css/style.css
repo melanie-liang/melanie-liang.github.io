@@ -148,10 +148,14 @@ a {
 }
 
 /* ---------- Sub-nav (second row: siblings of the active top-level item) ---------- */
+/* Centred, not tucked into the left corner: everything else on these pages is
+   centred, so a left-aligned row read as page furniture and visitors were
+   missing that the work is split into categories at all. */
 .sub-nav {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.6rem;
 }
 
