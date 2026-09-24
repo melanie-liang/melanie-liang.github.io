@@ -900,18 +900,13 @@ a.series-block:focus-visible .series-block-cue {
      source file being too small for a full-screen background: blurring it
      only clumped the speckle into blotches. Melanie supplied a bigger
      original instead, so the texture is simply resolved now. */
-  /* Melanie's screenshot is a wider frame than the crop that preceded it
-     (1.59 against 1.46), so on a normal window it sat further back and she
-     asked for it to come in again. 1.1 puts the framing back to roughly where
-     the old cover sat. The source is 2940px wide, so even scaled up it is
-     still about 1:1 on a retina screen -- nothing is softened. The section
-     clips the overflow. */
-  transform: scale(1.1);
+  /* No scale-up: hero.jpg is already cropped to exactly the framing Melanie
+     wants, so enlarging it here would only eat into the edges again. */
   /* A light softening, which is what Melanie settled on with the white type
      back. Keep it small: this painting's speckled grain does not disappear
      under a blur, it clumps into blotches, so a heavy blur makes the cover
-     look *more* grainy rather than less. The scale-up above also hides the
-     transparent edge a blur leaves. */
+     look *more* grainy rather than less. `object-position: center 60%` above
+     keeps the girl's hands when a short window has to crop something. */
   filter: blur(3px);
 }
 
