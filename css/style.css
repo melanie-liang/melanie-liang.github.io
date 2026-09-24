@@ -902,12 +902,12 @@ a.series-block:focus-visible .series-block-cue {
      original instead, so the texture is simply resolved now. */
   /* No scale-up: hero.jpg is already cropped to exactly the framing Melanie
      wants, so enlarging it here would only eat into the edges again. */
-  /* A light softening, which is what Melanie settled on with the white type
-     back. Keep it small: this painting's speckled grain does not disappear
-     under a blur, it clumps into blotches, so a heavy blur makes the cover
-     look *more* grainy rather than less. `object-position: center 60%` above
-     keeps the girl's hands when a short window has to crop something. */
-  filter: blur(3px);
+  /* No blur. The grain is taken out of hero.jpg itself now, so there is
+     nothing left for a blur to do except soften the drawing -- and blurring
+     this painting's speckle never removed it anyway, it clumped it into
+     blotches, which is exactly the "噪点在模糊后有点显眼" Melanie hit.
+     `object-position: center 60%` above keeps the girl's hands when a short
+     window has to crop something. */
 }
 
 /* The dark wash that used to sit here was only ever there to hold white text
