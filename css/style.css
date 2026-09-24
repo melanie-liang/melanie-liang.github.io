@@ -879,6 +879,10 @@ a.series-block:focus-visible .series-block-cue {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  /* Sampled from the painting's own outer border, so the section is already
+     the right yellow in the moment before the cover image has loaded. The
+     image covers it completely once it is there. */
+  background: #fdc83b;
 }
 
 .hero-bg {
@@ -886,52 +890,46 @@ a.series-block:focus-visible .series-block-cue {
   inset: 0;
   width: 100%;
   height: 100%;
+  /* Fills the window on every screen -- Melanie asked for no coloured bands
+     down the sides. The artwork is square, so on a wide screen the crop comes
+     off the top and bottom: anchored at 55% it keeps the blank circle the name
+     sits in, and keeps the mother and child rather than their strip of empty
+     yellow. */
   object-fit: cover;
-  /* The source is already the top half of "Swam Across Your Wall"; anchoring to
-     the top means any further cropping on wide screens takes from the bottom,
-     never from the two faces. */
-  /* The crop is the faces and both of the girl's hands, with a little room
-     under them, starting from the very top of the painting so there is some
-     room above their heads. Biased slightly downwards so that on a short
-     window it is the top that goes rather than her hands. */
-  object-position: center 60%;
-  /* The painting itself carries a heavy speckled noise texture, and blurring
-     that noise is what made the cover read as grainy/blotchy -- a blur turns
-     speckle into soft clumps rather than removing it. So the grain is taken
-     out of the file instead (box-averaged down and re-interpolated up, see
-     scratchpad denoise.py), and only a light blur is left here for the dreamy
-     feel. Raising this above ~4px brings the blotchiness back.
-     The slight scale-up hides the transparent edge blur leaves. */
-  filter: blur(1.5px);
-  transform: scale(1.06);
+  object-position: center 55%;
+  /* Deliberately untouched -- Melanie asked for the original: no blur, no
+     scale-up, no denoising pass. */
 }
 
+/* No scrim any more. The dark wash existed to hold white type over a
+   mid-toned painting; this cover is pale in the middle and the type is dark
+   brown, so a wash would only dirty the artwork. */
 .hero-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(
-    to bottom,
-    rgba(74, 46, 26, 0.15) 0%,
-    rgba(74, 46, 26, 0.35) 55%,
-    rgba(74, 46, 26, 0.55) 100%
-  );
+  background: none;
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   text-align: center;
-  color: #fffaf3;
+  color: #4a3b32;
   padding: 2rem;
-  max-width: 40rem;
+  /* Narrow enough to stay inside the circle, and lifted a little so the stack
+     sits in the clear upper part of it rather than over the two figures in the
+     lower left. */
+  max-width: 32rem;
+  transform: translateY(-6%);
 }
 
 
 .hero-name {
-  font-size: clamp(2.9rem, 7.5vw, 5rem);
+  /* Sized off whichever side of the window is shorter, because that is what
+     sets how big the square cover -- and so the circle -- actually is. */
+  font-size: clamp(2.9rem, min(7.5vw, 8vh), 5rem);
   font-weight: 700;
   margin: 0.35rem 0 1.1rem;
-  text-shadow: 0 3px 14px rgba(0, 0, 0, 0.3);
 }
 
 
@@ -940,7 +938,7 @@ a.series-block:focus-visible .series-block-cue {
   height: 3px;
   margin: 0 auto 1.4rem;
   border: none;
-  background: #f6c99a;
+  background: #e0912b;
   border-radius: 2px;
 }
 
@@ -948,7 +946,6 @@ a.series-block:focus-visible .series-block-cue {
   font-size: clamp(1.3rem, 1.9vw, 1.8rem);
   font-style: italic;
   margin-bottom: 1.9rem;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* The obvious way into the site. The bare chevron that used to sit at the
@@ -961,25 +958,23 @@ a.series-block:focus-visible .series-block-cue {
   display: inline-block;
   margin-top: 0.6rem;
   padding: 0.8rem 2.6rem;
-  border: 1.5px solid rgba(255, 250, 243, 0.6);
+  border: 1.5px solid rgba(74, 46, 26, 0.45);
   border-radius: 999px;
-  background: rgba(74, 46, 26, 0.26);
-  color: #fffaf3;
+  background: rgba(255, 250, 243, 0.4);
+  color: #4a3b32;
   text-decoration: none;
   font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
   font-weight: 600;
   font-size: 1.05rem;
   letter-spacing: 0.04em;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.3);
   transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .hero-enter:hover,
 .hero-enter:focus-visible {
-  background: #fffaf3;
-  border-color: #fffaf3;
-  color: #4a3b32;
-  text-shadow: none;
+  background: #4a3b32;
+  border-color: #4a3b32;
+  color: #fffaf3;
   transform: translateY(-2px);
 }
 
@@ -994,6 +989,7 @@ a.series-block:focus-visible .series-block-cue {
   display: block;
   margin: 0 auto;
   opacity: 0.9;
+  border-color: #4a3b32;
 }
 
 @keyframes nudge {
@@ -1025,16 +1021,15 @@ a.series-block:focus-visible .series-block-cue {
 
 .hero-links a {
   display: inline-block;
-  color: rgba(255, 250, 243, 0.85);
+  color: rgba(74, 46, 26, 0.8);
   text-decoration: none;
   font-size: 1rem;
   font-weight: 500;
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.45);
   transition: color 0.25s ease;
 }
 
 .hero-links a:hover {
-  color: #fffaf3;
+  color: #4a3b32;
   text-decoration: underline;
 }
 
@@ -1618,7 +1613,9 @@ body.chat-modal-open .scroller {
   /* Melanie wanted the bigger hero on desktop only, so below this width
      everything goes back to its original size. */
   .hero-name {
-    font-size: clamp(2.25rem, 6vw, 3.75rem);
+    /* Phones are tall and narrow, so the square cover is as wide as the screen
+       and the name is sized off the width alone. */
+    font-size: clamp(2.25rem, 9vw, 3.75rem);
     margin: 0.35rem 0 1rem;
   }
 
@@ -1629,7 +1626,9 @@ body.chat-modal-open .scroller {
 
   .hero-tagline {
     font-size: 1.1rem;
-    margin-bottom: 1.75rem;
+    /* Tighter than on desktop so the whole stack fits the circle's clear part
+       without pushing the name up onto the yellow. */
+    margin-bottom: 1.1rem;
   }
 
   .hero-enter {
@@ -1639,6 +1638,22 @@ body.chat-modal-open .scroller {
 
   .hero-scroll-hint {
     margin-top: 1.2rem;
+  }
+
+  /* On a phone the square cover is only as wide as the screen, so the mother
+     and child inside the circle are relatively bigger and the About button
+     landed on top of them. Lift the whole stack into the clear upper half of
+     the circle. */
+  .hero-content {
+    transform: translateY(-6vh);
+  }
+
+  /* A phone crops the square sideways instead of top-to-bottom, and centring
+     it sliced the mother in half at the left edge. Anchored at 26% the window
+     starts just outside her, so both figures stay whole and the name still
+     lands on blank circle. */
+  .hero-bg {
+    object-position: 26% center;
   }
 
   .hero-links {
