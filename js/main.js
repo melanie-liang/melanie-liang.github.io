@@ -270,3 +270,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+
+/* Blocks the right-click menu and drag-to-save over artwork. Friction only --
+   see the note at the end of style.css. Scoped to images so right-clicking
+   text still behaves normally (back, reload, translate). */
+document.addEventListener('contextmenu', (e) => {
+  if (e.target.closest('img, .art-tile, .project-shot')) e.preventDefault();
+});
+
+document.addEventListener('dragstart', (e) => {
+  if (e.target.tagName === 'IMG') e.preventDefault();
+});

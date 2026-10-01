@@ -420,23 +420,17 @@ a {
   transition: filter 0.35s ease, transform 0.35s ease;
 }
 
+/* The "Melanie" watermark used to be drawn here as a `content: 'Melanie'`
+   pseudo-element. It is burned into the image files now, because a CSS
+   watermark is painted by the browser and never reaches the file -- anyone
+   could right-click, Save Image As, and get a clean copy. This rule is kept
+   only as the hook the hover/focus states still use; it draws nothing. */
 .art-tile::before {
-  content: 'Melanie';
+  content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 18%;
-  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
-  font-weight: 700;
-  font-size: 1.5rem;
-  letter-spacing: 0.06em;
-  color: rgba(255, 255, 255, 0.5);
-  white-space: nowrap;
   pointer-events: none;
-  transition: opacity 0.3s ease;
 }
 
 /* :hover is scoped to real mouse pointers only — on touch devices it can
@@ -1793,4 +1787,35 @@ html[lang|="zh"] [data-lang="en"] {
 /* Chinese reads better with a little more line height than the Latin fonts. */
 html[lang|="zh"] body {
   line-height: 1.75;
+}
+
+/* ---------- Saving and copying ---------- */
+/* None of this actually prevents anything, and Melanie has been told so: a
+   browser has to download an image in order to show it, and a screenshot
+   always works. This is friction for the casual right-click. The real
+   protection is the watermark burned into the image files plus the
+   deliberately low pixel sizes, both of which survive being saved. */
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+
+body {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Her contact details stay selectable on purpose -- locking those would stop
+   people copying her email or phone, which is the opposite of what the site is
+   for. Form fields have to stay selectable or they cannot be typed in and
+   corrected. */
+.contact-list,
+.contact-list *,
+.hero-links,
+.hero-links *,
+input,
+textarea {
+  -webkit-user-select: text;
+  user-select: text;
 }
