@@ -1799,6 +1799,12 @@ html[lang|="zh"] body {
 img {
   -webkit-user-drag: none;
   user-drag: none;
+  /* iOS answers a long press on an image with its own "Save Image" sheet, and
+     that sheet is not the context menu -- preventDefault on `contextmenu` does
+     nothing to it. This is the switch that turns it off, and it is also what
+     lets a long press on an art tile fall through to the tap handler, so it
+     reveals the caption like a tap does. */
+  -webkit-touch-callout: none;
 }
 
 body {
