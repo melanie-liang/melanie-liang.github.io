@@ -430,7 +430,12 @@ a {
   position: absolute;
   inset: 0;
   z-index: 1;
-  pointer-events: none;
+  /* Deliberately hit-testable, as a second line of defence against the iOS
+     long-press menu: with this sheet of nothing over the picture, the press
+     lands on the <figure> rather than on the <img>, and Safari has no image
+     to offer "Save Image" for. Clicks still reach the tile (and the <a> around
+     a series preview), so tapping to reveal the caption is unaffected. */
+  pointer-events: auto;
 }
 
 /* :hover is scoped to real mouse pointers only — on touch devices it can
