@@ -1796,15 +1796,25 @@ html[lang|="zh"] body {
    protection is the watermark burned into the image files plus the
    deliberately low pixel sizes, both of which survive being saved. */
 
+/* iOS answers a long press with its own callout sheet ("Save Image", "Copy"),
+   and that sheet is not the context menu -- preventDefault on `contextmenu`
+   does nothing to it. `-webkit-touch-callout` is the switch for it, and it is
+   inherited, so it is set on the root rather than only on `img`: setting it on
+   the image alone was not enough on Melanie's phone, because for an image
+   inside a link it is the link that owns the callout. Suppressing it also lets
+   a long press fall through to the tap handler, so it reveals the caption the
+   same way a tap does. */
+html,
+body,
+a,
+img,
+.art-tile {
+  -webkit-touch-callout: none;
+}
+
 img {
   -webkit-user-drag: none;
   user-drag: none;
-  /* iOS answers a long press on an image with its own "Save Image" sheet, and
-     that sheet is not the context menu -- preventDefault on `contextmenu` does
-     nothing to it. This is the switch that turns it off, and it is also what
-     lets a long press on an art tile fall through to the tap handler, so it
-     reveals the caption like a tap does. */
-  -webkit-touch-callout: none;
 }
 
 body {
