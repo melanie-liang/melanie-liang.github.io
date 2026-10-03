@@ -281,3 +281,65 @@ document.addEventListener('contextmenu', (e) => {
 document.addEventListener('dragstart', (e) => {
   if (e.target.tagName === 'IMG') e.preventDefault();
 });
+
+/* Media page. Two things browsers force on us: a video may only start on its
+   own if it is muted, and a page full of autoplaying videos is a page full of
+   downloads. So each clip is `preload="none"` and only starts once it scrolls
+   into view, and sound is opt-in per clip. `preload="metadata"` in the markup
+   is what paints a first frame in the tile instead of a blank box while the
+   visitor is still scrolling towards it. Turning sound on for one clip mutes
+   the others, so two of them can never talk over each other. */
+(() => {
+  const tiles = [...document.querySelectorAll('.video-tile')];
+  if (!tiles.length) return;
+
+  const videos = tiles.map((tile) => tile.querySelector('video'));
+
+  // Two observers, because loading and playing want different timing. The
+  // first starts fetching a clip while it is still a screenful away, so the
+  // tile is not an empty box by the time it is scrolled to. The second only
+  // plays what is actually on screen.
+  const warm = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      // Setting preload is enough; calling load() here resets the element and
+      // cancels playback that the other observer has just started.
+      entry.target.preload = 'auto';
+      warm.unobserve(entry.target);
+    });
+  }, { rootMargin: '800px 0px' });
+
+  const seen = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const video = entry.target;
+      if (entry.isIntersecting) {
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
+  }, { threshold: 0.4 });
+
+  videos.forEach((video) => {
+    warm.observe(video);
+    seen.observe(video);
+  });
+
+  tiles.forEach((tile) => {
+    const video = tile.querySelector('video');
+    const button = tile.querySelector('.video-sound');
+    if (!button) return;
+
+    button.addEventListener('click', () => {
+      const turningOn = video.muted;
+      videos.forEach((other) => {
+        other.muted = true;
+        const b = other.closest('.video-tile').querySelector('.video-sound');
+        if (b) b.setAttribute('aria-pressed', 'false');
+      });
+      video.muted = !turningOn;
+      button.setAttribute('aria-pressed', String(turningOn));
+      if (turningOn) video.play().catch(() => {});
+    });
+  });
+})();
