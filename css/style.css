@@ -1894,17 +1894,13 @@ textarea {
 }
 
 /* ---------- Media page ---------- */
-/* Her videos were cut for RedNote, so most are a 9:16 frame with a black band
-   top and bottom. The bands are cropped in CSS rather than re-encoded, so
-   nothing is re-compressed and her files stay untouched: the tile sets an
-   aspect ratio and the video fills it with `cover`.
-   The bands are not the same on every clip. Measured on the exports by
-   sampling five frames each and taking the smallest black margin (a single
-   frame is unreliable -- a dark shot reads as a band), the picture inside the
-   frame runs from 0.563 to 0.733 wide-over-tall, with one clip having no band
-   at all. 7/10 is the compromise: clips wider than that keep a sliver of
-   black, narrower ones lose a little top and bottom. If a new clip is added,
-   re-measure rather than assuming. */
+/* The tiles are the full 9:16 frame, black bands and all. The bands were
+   cropped in CSS for a round, and Melanie asked for them back ("全保留"):
+   they are not empty on every clip -- several carry her burnt-in RedNote
+   captions, and cropping cut the text in half. The bands also differ from
+   clip to clip (measured across five frames each, from none at all to 13%
+   top and bottom), so no single crop suited them. If this comes up again,
+   crop per clip or not at all. */
 .video-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
@@ -1914,9 +1910,9 @@ textarea {
 .video-tile {
   position: relative;
   margin: 0;
-  aspect-ratio: 7 / 10;
+  aspect-ratio: 9 / 16;
   overflow: hidden;
-  background: #f5e8d8;
+  background: #000;
 }
 
 .video-tile video {
