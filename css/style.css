@@ -1980,3 +1980,65 @@ textarea {
 .video-more a:hover {
   text-decoration: underline;
 }
+
+/* ---------- Article cards (WeChat) ---------- */
+/* WeChat articles cannot be embedded: the article's own CSP header carries
+   `frame-ancestors` listing only Tencent's domains, so a browser refuses to
+   render it in an iframe anywhere else. Verified on Melanie's own article.
+   So each one is a card instead -- its real cover image (downloaded and
+   hosted here; the cover is not referer-protected), title, account and date
+   -- that opens the article in WeChat. */
+/* auto-fill with a max track, not auto-fit with 1fr: with a single article
+   `auto-fit` collapsed the empty tracks and stretched that one card across
+   the whole page. */
+.article-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18rem, 24rem));
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.article-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: #fffaf3;
+  border: 1.5px solid #eaddcc;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+
+.article-card:hover,
+.article-card:focus-visible {
+  border-color: #d9a876;
+  transform: translateY(-3px);
+}
+
+.article-card img {
+  width: 100%;
+  aspect-ratio: 900 / 382;
+  object-fit: cover;
+  display: block;
+}
+
+.article-card-text {
+  padding: 1.1rem 1.25rem 1.35rem;
+}
+
+.article-card h2 {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  margin: 0 0 0.45rem;
+}
+
+.article-meta {
+  font-size: 0.85rem;
+  color: #8a6f5c;
+  margin: 0 0 0.8rem;
+}
+
+.article-cue {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #b5652e;
+}
