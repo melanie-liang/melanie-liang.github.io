@@ -1840,3 +1840,40 @@ textarea {
   -webkit-user-select: text;
   user-select: text;
 }
+
+/* One work shown in three versions (the Nature Lab poster: Risograph on paper,
+   Risograph on handmade paper, and a digital version in Risograph colours).
+   It claims a whole row rather than three separate cells, because it is one
+   piece -- Melanie: "他们是一幅画...我不想占三个位置". The tile drops the square
+   aspect-ratio and lets the three images set the height. */
+.art-tile--set {
+  grid-column: 1 / -1;
+  aspect-ratio: auto;
+}
+
+.art-set {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.art-set img {
+  height: 26rem;
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 860px) {
+  /* Keep all three on one row on a phone: the width has to allow for both
+     gaps exactly, or they wrap to 2 + 1 and stop reading as one piece. */
+  .art-set {
+    gap: 0.5rem;
+  }
+
+  .art-set img {
+    height: auto;
+    width: calc((100% - 1rem) / 3);
+  }
+}
