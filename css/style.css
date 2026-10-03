@@ -1841,39 +1841,54 @@ textarea {
   user-select: text;
 }
 
-/* One work shown in three versions (the Nature Lab poster: Risograph on paper,
-   Risograph on handmade paper, and a digital version in Risograph colours).
-   It claims a whole row rather than three separate cells, because it is one
-   piece -- Melanie: "他们是一幅画...我不想占三个位置". The tile drops the square
-   aspect-ratio and lets the three images set the height. */
-.art-tile--set {
-  grid-column: 1 / -1;
-  aspect-ratio: auto;
-}
-
-.art-set {
+/* One work that exists in more than one version: the tile shows a single
+   image and the other versions appear inside the caption on hover/tap, so it
+   still takes one cell of the grid. Melanie tried a full-row, three-up layout
+   first and found it forced an awkward break in the grid -- "我不希望因为 riso
+   那个图片有三个很长就要换一行". The Nature Lab poster shows its digital version
+   and reveals the two Risograph prints. */
+.art-versions {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  align-items: flex-start;
-  gap: 1rem;
+  gap: 0.8rem;
+  margin-top: 0.8rem;
 }
 
-.art-set img {
-  height: 26rem;
-  width: auto;
+/* Small on purpose: the overlay sits inside one square tile and has to hold
+   the title and the medium line as well. Anything larger pushed the text out
+   of the tile entirely. */
+.art-versions figure {
+  margin: 0;
+  width: 3.4rem;
+}
+
+.art-versions img {
+  width: 100%;
+  height: auto;
   display: block;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-@media (max-width: 860px) {
-  /* Keep all three on one row on a phone: the width has to allow for both
-     gaps exactly, or they wrap to 2 + 1 and stop reading as one piece. */
-  .art-set {
-    gap: 0.5rem;
-  }
+.art-versions figcaption {
+  margin-top: 0.3rem;
+  font-size: 0.62rem;
+  line-height: 1.25;
+  opacity: 0.9;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
+}
 
-  .art-set img {
-    height: auto;
-    width: calc((100% - 1rem) / 3);
-  }
+/* The caption on this tile carries more than the usual two lines, so it is
+   tightened to fit. */
+.art-tile--versions .art-overlay {
+  padding: 1rem;
+}
+
+.art-tile--versions .art-overlay h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.art-tile--versions .art-overlay p {
+  font-size: 0.78rem;
+  line-height: 1.4;
 }
