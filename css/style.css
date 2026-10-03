@@ -376,7 +376,7 @@ a {
   aspect-ratio: auto;
 }
 
-.art-grid--mixed .mixed-side .art-tile img {
+.art-grid--mixed .mixed-side .art-tile > img {
   width: 100%;
   height: auto;
 }
@@ -442,7 +442,7 @@ a {
    stick around after a tap in an unpredictable way, so touch relies solely
    on the JS-driven .active class below for consistent open/close behavior. */
 @media (hover: hover) and (pointer: fine) {
-  .art-tile:hover img {
+  .art-tile:hover > img {
     filter: blur(7px) brightness(0.72);
     transform: scale(1.06);
   }
@@ -456,8 +456,8 @@ a {
   }
 }
 
-.art-tile:focus-visible img,
-.art-tile.active img {
+.art-tile:focus-visible > img,
+.art-tile.active > img {
   filter: blur(7px) brightness(0.72);
   transform: scale(1.06);
 }
@@ -786,8 +786,8 @@ a.series-block:focus-visible .series-block-cue {
 /* Preview tiles inside a series block aren't individually interactive — the
    block itself is the link — so suppress the per-tile blur/caption reveal
    and keep the watermark showing. */
-.series-block .art-tile:hover img,
-.series-block .art-tile:focus-visible img {
+.series-block .art-tile:hover > img,
+.series-block .art-tile:focus-visible > img {
   filter: none;
   transform: none;
 }
@@ -1854,12 +1854,12 @@ textarea {
   margin-top: 0.8rem;
 }
 
-/* Small on purpose: the overlay sits inside one square tile and has to hold
-   the title and the medium line as well. Anything larger pushed the text out
-   of the tile entirely. */
+/* Big enough to actually read the two prints -- Melanie: "确实很小". The
+   overlay still has to hold the title and the medium line, so this is about
+   the ceiling for a square tile. */
 .art-versions figure {
   margin: 0;
-  width: 3.4rem;
+  width: 5.6rem;
 }
 
 .art-versions img {
@@ -1871,7 +1871,7 @@ textarea {
 
 .art-versions figcaption {
   margin-top: 0.3rem;
-  font-size: 0.62rem;
+  font-size: 0.68rem;
   line-height: 1.25;
   opacity: 0.9;
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.4);
