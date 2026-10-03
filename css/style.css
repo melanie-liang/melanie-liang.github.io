@@ -1850,8 +1850,8 @@ textarea {
 .art-versions {
   display: flex;
   justify-content: center;
-  gap: 0.8rem;
-  margin-top: 0.8rem;
+  gap: 0.7rem;
+  margin-top: 0.7rem;
 }
 
 /* Big enough to actually read the two prints -- Melanie: "确实很小". The
@@ -1859,7 +1859,7 @@ textarea {
    the ceiling for a square tile. */
 .art-versions figure {
   margin: 0;
-  width: 5.6rem;
+  width: 7.2rem;
 }
 
 .art-versions img {
@@ -1880,7 +1880,7 @@ textarea {
 /* The caption on this tile carries more than the usual two lines, so it is
    tightened to fit. */
 .art-tile--versions .art-overlay {
-  padding: 1rem;
+  padding: 0.85rem;
 }
 
 .art-tile--versions .art-overlay h3 {
