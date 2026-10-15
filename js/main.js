@@ -343,3 +343,28 @@ document.addEventListener('dragstart', (e) => {
     });
   });
 })();
+
+/* ---------- Hover hint on outgoing links ----------
+   Melanie was told by an art director that nobody will copy a URL out of a
+   page by hand, so anything that leads somewhere has to look like it. The
+   contact details are underlined in orange for the same reason; this adds a
+   small bubble on hover saying where the link goes. Only links that leave
+   the page qualify -- the nav already reads as navigation, and labelling it
+   too would just be clutter. The wording lives in style.css so it can be a
+   data-lang pair. */
+(() => {
+  const kindOf = (a) => {
+    const href = a.getAttribute('href') || '';
+    if (href.startsWith('mailto:')) return 'mail';
+    if (href.startsWith('tel:')) return 'tel';
+    if (/^https?:\/\//i.test(href) && a.hostname !== window.location.hostname) return 'ext';
+    return null;
+  };
+
+  document.querySelectorAll('a[href]').forEach((a) => {
+    // the WeChat cards already carry their own "Read on WeChat →" cue
+    if (a.classList.contains('article-card')) return;
+    const kind = kindOf(a);
+    if (kind) a.classList.add('has-tip', 'tip-' + kind);
+  });
+})();

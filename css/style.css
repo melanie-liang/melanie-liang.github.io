@@ -703,15 +703,22 @@ a.series-block .art-tile--plain {
   color: #8a6f5c;
 }
 
+/* Orange and underlined from the start, not only on hover: an art director
+   reviewing the page should see at a glance that these are links, not text
+   to be copied out by hand. */
 .contact-list a {
   font-weight: 600;
-  color: #4a3b32;
-  text-decoration: none;
+  color: #b5652e;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(181, 101, 46, 0.5);
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
 }
 
 .contact-list a:hover {
-  color: #b5652e;
-  text-decoration: underline;
+  color: #8f4c1f;
+  text-decoration-color: currentColor;
 }
 
 /* Each series on series.html is one big link into its own page — the whole
@@ -2013,4 +2020,58 @@ textarea {
   font-size: 0.9rem;
   font-weight: 600;
   color: #b5652e;
+}
+
+
+/* ---------- Hover hint on outgoing links ----------
+   Same reason the contact details are underlined: people do not always
+   realise a line of text will take them somewhere. Only links that leave
+   the page carry the hint -- putting it on the nav too would be noise,
+   since those links already look and behave like navigation. `main.js`
+   adds the classes; the wording is a data-lang pair like every other
+   string on the site. */
+.has-tip {
+  position: relative;
+}
+
+.has-tip::after {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 0.5rem);
+  z-index: 80;
+  transform: translate(-50%, 4px);
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.55rem;
+  background: rgba(74, 46, 26, 0.94);
+  color: #fffaf3;
+  font-family: 'Nunito', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  text-shadow: none;
+  text-decoration: none;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease, transform 0.18s ease;
+}
+
+.has-tip:hover::after,
+.has-tip:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+html:not([lang|="zh"]) .tip-ext::after { content: 'Opens in a new tab ↗'; }
+html[lang|="zh"] .tip-ext::after { content: '点击在新标签页打开 ↗'; }
+html:not([lang|="zh"]) .tip-mail::after { content: 'Opens your mail app ↗'; }
+html[lang|="zh"] .tip-mail::after { content: '点击给我写邮件 ↗'; }
+html:not([lang|="zh"]) .tip-tel::after { content: 'Tap to call ↗'; }
+html[lang|="zh"] .tip-tel::after { content: '点击拨号 ↗'; }
+
+/* A long press on a phone should not leave the bubble stranded on screen,
+   and there is no cursor there to explain anything to. */
+@media (hover: none) {
+  .has-tip::after { display: none; }
 }
