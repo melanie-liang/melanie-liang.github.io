@@ -2075,3 +2075,161 @@ html[lang|="zh"] .tip-tel::after { content: '点击拨号 ↗'; }
 @media (hover: none) {
   .has-tip::after { display: none; }
 }
+
+/* Large view for single illustrations. main.js opens it when a tile carries
+   data-large="...". The picture sits in .lightbox-art, and a transparent sheet
+   over it (::after) is what a long press lands on, so iOS has no image to offer
+   "Save Image" for -- the same trick as .art-tile::before. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3.5rem 1rem 1.5rem;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox[hidden] {
+  display: none;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(46, 36, 32, 0.93);
+}
+
+.lightbox-figure {
+  position: relative;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: min(94vw, 64rem);
+}
+
+.lightbox-art {
+  position: relative;
+  line-height: 0;
+}
+
+.lightbox-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+
+.lightbox-art img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 78vh;
+  object-fit: contain;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.lightbox-art img.is-loaded {
+  opacity: 1;
+}
+
+.lightbox-caption {
+  margin-top: 0.9rem;
+  text-align: center;
+  color: #fffaf3;
+}
+
+.lightbox-caption h3 {
+  margin: 0;
+  font-family: 'Quicksand', "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  font-size: 1.2rem;
+}
+
+.lightbox-caption p {
+  margin: 0.2rem 0 0;
+  font-size: 0.95rem;
+  opacity: 0.8;
+}
+
+.lightbox-close,
+.lightbox-nav {
+  position: absolute;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 250, 243, 0.14);
+  color: #fffaf3;
+  font-size: 1.9rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-nav:hover {
+  background: rgba(255, 250, 243, 0.28);
+}
+
+.lightbox-close:focus-visible,
+.lightbox-nav:focus-visible {
+  outline: 3px solid #f0a35f;
+  outline-offset: 2px;
+}
+
+.lightbox-close {
+  top: 0.75rem;
+  right: 1rem;
+}
+
+.lightbox-nav {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lightbox-prev {
+  left: 1rem;
+}
+
+.lightbox-next {
+  right: 1rem;
+}
+
+.lightbox-nav[hidden] {
+  display: none;
+}
+
+/* On a phone the arrows would sit on top of the picture, so they drop to the
+   bottom corners instead. */
+@media (max-width: 700px) {
+  .lightbox {
+    padding-bottom: 4.5rem;
+  }
+
+  .lightbox-nav {
+    top: auto;
+    bottom: 1rem;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox,
+  .lightbox-art img {
+    transition: none;
+  }
+}

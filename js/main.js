@@ -179,13 +179,122 @@ document.addEventListener('DOMContentLoaded', () => {
     return false;
   });
 
+  // A mouse already sees the caption on hover, so for it one click is enough
+  // to open the large view; on a touch screen the first tap reveals the caption
+  // and the second tap opens it.
+  const mouseCanHover = window.matchMedia('(hover: hover) and (pointer: fine)');
+
   artTiles.forEach((tile) => {
     tile.addEventListener('click', () => {
       const wasActive = tile.classList.contains('active');
+      if (tile.dataset.large && (wasActive || mouseCanHover.matches)) {
+        openLightbox(tile);
+        return;
+      }
       artTiles.forEach((t) => t.classList.remove('active'));
       if (!wasActive) tile.classList.add('active');
     });
+    // Keyboard: Enter or Space on a focused tile opens the large view too.
+    tile.addEventListener('keydown', (e) => {
+      if (tile.dataset.large && (e.key === 'Enter' || e.key === ' ')) {
+        e.preventDefault();
+        openLightbox(tile);
+      }
+    });
   });
+
+  // Large view ("lightbox"). A tile that carries a data-large="..." attribute
+  // opens that bigger picture, with the same title/caption underneath, in an
+  // overlay that sits on top of the page. Esc, the x, or a click outside the
+  // picture closes it; the arrows (and left/right keys) step through the other
+  // tiles that have a large picture. Tiles without data-large behave exactly as
+  // before. The overlay is built the first time it is needed.
+  const largeTiles = artTiles.filter((t) => t.dataset.large);
+  let lightbox = null;
+  let lbImg = null;
+  let lbCaption = null;
+  let lbTile = null;
+
+  function lbLabel(en, zh) {
+    return document.documentElement.lang.toLowerCase().startsWith('zh') ? zh : en;
+  }
+
+  function buildLightbox() {
+    lightbox = document.createElement('div');
+    lightbox.className = 'lightbox';
+    lightbox.hidden = true;
+    lightbox.setAttribute('role', 'dialog');
+    lightbox.setAttribute('aria-modal', 'true');
+    lightbox.innerHTML =
+      '<div class="lightbox-backdrop"></div>' +
+      '<button class="lightbox-close" type="button">&times;</button>' +
+      '<button class="lightbox-nav lightbox-prev" type="button">&lsaquo;</button>' +
+      '<button class="lightbox-nav lightbox-next" type="button">&rsaquo;</button>' +
+      '<figure class="lightbox-figure">' +
+        '<div class="lightbox-art"><img alt=""></div>' +
+        '<figcaption class="lightbox-caption"></figcaption>' +
+      '</figure>';
+    document.body.appendChild(lightbox);
+    lbImg = lightbox.querySelector('img');
+    lbCaption = lightbox.querySelector('.lightbox-caption');
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target.closest('.lightbox-close')) closeLightbox();
+      else if (e.target.closest('.lightbox-prev')) stepLightbox(-1);
+      else if (e.target.closest('.lightbox-next')) stepLightbox(1);
+      else if (!e.target.closest('.lightbox-art')) closeLightbox();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (lightbox.hidden) return;
+      if (e.key === 'Escape') closeLightbox();
+      else if (e.key === 'ArrowLeft') stepLightbox(-1);
+      else if (e.key === 'ArrowRight') stepLightbox(1);
+    });
+  }
+
+  function showInLightbox(tile) {
+    lbTile = tile;
+    const small = tile.querySelector('img');
+    lbImg.classList.remove('is-loaded');
+    lbImg.onload = () => lbImg.classList.add('is-loaded');
+    lbImg.src = tile.dataset.large;
+    lbImg.alt = small ? small.alt : '';
+    lbCaption.textContent = '';
+    ['h3', 'p'].forEach((sel) => {
+      const part = tile.querySelector('.art-overlay ' + sel);
+      if (part) lbCaption.appendChild(part.cloneNode(true));
+    });
+    const several = largeTiles.length > 1;
+    lightbox.querySelectorAll('.lightbox-nav').forEach((b) => { b.hidden = !several; });
+    lightbox.querySelector('.lightbox-close').setAttribute('aria-label', lbLabel('Close', '关闭'));
+    lightbox.querySelector('.lightbox-prev').setAttribute('aria-label', lbLabel('Previous', '上一张'));
+    lightbox.querySelector('.lightbox-next').setAttribute('aria-label', lbLabel('Next', '下一张'));
+  }
+
+  function openLightbox(tile) {
+    if (!lightbox) buildLightbox();
+    showInLightbox(tile);
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => lightbox.classList.add('is-open'));
+    lightbox.querySelector('.lightbox-close').focus();
+  }
+
+  function stepLightbox(dir) {
+    const i = largeTiles.indexOf(lbTile);
+    if (i < 0) return;
+    showInLightbox(largeTiles[(i + dir + largeTiles.length) % largeTiles.length]);
+  }
+
+  function closeLightbox() {
+    if (!lightbox || lightbox.hidden) return;
+    lightbox.classList.remove('is-open');
+    lightbox.hidden = true;
+    document.body.style.overflow = '';
+    lbImg.removeAttribute('src');
+    artTiles.forEach((t) => t.classList.remove('active'));
+    if (lbTile) lbTile.focus({ preventScroll: true });
+  }
 
   if (artTiles.length) {
     document.addEventListener('click', (e) => {
