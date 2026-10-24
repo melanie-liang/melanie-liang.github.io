@@ -2233,3 +2233,158 @@ html[lang|="zh"] .tip-tel::after { content: '点击拨号 ↗'; }
     transition: none;
   }
 }
+
+/* ---------- Bio panel: three identities, each a square picture over its own paragraph ---------- */
+/* Replaces the single photo of Melanie. The panel is one full-width column
+   (no photo half); every picture is a link into that part of the site, and
+   hovering a picture or its paragraph lights both up. Picture and paragraph
+   share one column width. */
+.identity-section .split-text {
+  flex: 1 1 100%;
+  /* Centre the content in the screen when it fits (so it sits lower on a tall
+     window), but start at the top when it does not -- "safe" is what stops the
+     first line being pushed up under the fixed header. Older browsers ignore
+     the second line and keep the top-aligned fallback. */
+  align-items: flex-start;
+  align-items: safe center;
+}
+
+.identity-section .split-text-inner {
+  max-width: 68rem;
+  width: 100%;
+  /* Start at the top, below the fixed header. Centring with margin:auto pushed
+     the first line under the header on a short laptop window, where it could
+     not be scrolled back into view; if the content is taller than the window
+     the panel scrolls (the chevron button says so). */
+  margin: 0 auto;
+  padding: 6.5rem clamp(1.5rem, 5vw, 4rem) 3.5rem;
+}
+
+.identity-section .lede {
+  text-align: center;
+  font-size: 23px;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+.identity-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: start;
+}
+
+.identity-col {
+  min-width: 0;
+}
+
+.identity-tile {
+  position: relative;
+  display: block;
+  /* Narrower than its paragraph on purpose: the text keeps the full column,
+     the picture is a smaller square centred above it. */
+  width: 52%;
+  margin: 0 auto;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.identity-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+
+.identity-tile[data-id="illustration"] img { object-position: center 22%; }
+.identity-tile[data-id="curation"] img { object-position: center 0%; }
+.identity-tile[data-id="media"] img { object-position: center; }
+
+.identity-tile::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(70, 40, 20, 0.5), rgba(70, 40, 20, 0) 38%);
+  pointer-events: none;
+}
+
+.identity-label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.7rem;
+  z-index: 1;
+  text-align: center;
+  color: #fffaf3;
+  font-weight: 700;
+  font-size: 1.05rem;
+  text-shadow: 0 1px 6px rgba(70, 40, 20, 0.6);
+}
+
+.identity-tile:hover img,
+.identity-tile:focus-visible img,
+.identity-tile.is-linked img {
+  transform: scale(1.05);
+}
+
+.identity-tile:focus-visible {
+  outline: 3px solid #f0a35f;
+  outline-offset: -3px;
+}
+
+.identity-tile .cta-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.identity-tile:hover .cta-arrow,
+.identity-tile.is-linked .cta-arrow {
+  transform: translateX(4px);
+}
+
+.identity-block h2,
+.split-text .identity-block h2:first-child {
+  margin-top: 2.25rem;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 0.25s ease;
+}
+
+.identity-block.is-linked h2 {
+  text-decoration-color: #b5652e;
+}
+
+.identity-block p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* Phone: one column, picture then its paragraph, three times over. */
+@media (max-width: 860px) {
+  .identity-section .split-text-inner {
+    padding: 1.75rem 1.5rem 2.5rem;
+  }
+
+  .identity-grid {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    width: 100%;
+  }
+
+  .identity-tile {
+    width: 50%;
+    max-width: 11rem;
+    margin: 0 auto;
+  }
+
+  .identity-block h2 {
+    text-align: center;
+  }
+
+  .identity-section .lede {
+    text-align: left;
+  }
+}
+

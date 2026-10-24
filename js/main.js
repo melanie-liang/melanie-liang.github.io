@@ -477,3 +477,23 @@ document.addEventListener('dragstart', (e) => {
     if (kind) a.classList.add('has-tip', 'tip-' + kind);
   });
 })();
+
+// Bio panel on the home page: hovering (or keyboard-focusing) one of the three
+// identity pictures lights up its paragraph, and hovering a paragraph lights up
+// its picture. The pictures themselves are plain links.
+(function () {
+  const pairs = {};
+  document.querySelectorAll('[data-id]').forEach((el) => {
+    if (!el.matches('.identity-tile, .identity-block')) return;
+    (pairs[el.dataset.id] = pairs[el.dataset.id] || []).push(el);
+  });
+  Object.values(pairs).forEach((els) => {
+    const set = (on) => els.forEach((e) => e.classList.toggle('is-linked', on));
+    els.forEach((e) => {
+      e.addEventListener('mouseenter', () => set(true));
+      e.addEventListener('mouseleave', () => set(false));
+      e.addEventListener('focusin', () => set(true));
+      e.addEventListener('focusout', () => set(false));
+    });
+  });
+})();
